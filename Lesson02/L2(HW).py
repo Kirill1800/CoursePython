@@ -5,8 +5,7 @@ try:
 except ValueError:
     print("Была ошибка")
 
-print("\nError 2")
-print()
+print("\nError 2\n")
 try:
     print(a)
 except NameError:
@@ -21,3 +20,5 @@ try:
 except SyntaxError:
     print("Была ошибка")
 print("\nError 4")
+
+
