@@ -1,3 +1,131 @@
+print("\n***Множественное присвайвание:")
+
+a = b = c = 5
+print(a, b, c)
+
+print("\n***Разбираем строки:")
+
+string = "Hello"
+
+print(string[0])
+print(string[-1])
+
+print("\n***Элементарный цикл for где пробегаем по каждому символу и выводим его:")
+
+for x in string:
+    print(x)
+
+print("\n***Срезы:")
+
+print(string[1:4])  # ell
+print(string[1:])  # ello
+print(string * 2)  # HelloHello
+
+print("\n***Массив (лист):")
+
+mas1 = [5, 6, 7]
+mas2 = ['Hello', 'My', "Name", "Nikita"]
+
+print(mas1)
+print(mas2[-1])
+
+print("\n***Булевый тип:")
+
+x = True
+y = False
+z = not x
+
+print(x, y, z)
+
+# Одно и тоже
+x = False
+if x == True:
+    print("1")
+if x == False:
+    print("2")
+
+# Одно и тоже
+x = False
+if x:
+    print("1")
+if not x:
+    print("2")
+
+# Одно и тоже
+x = 1
+if x == 0:
+    print("1")
+if x == 1:
+    print("2")
+
+print("\n***Изменение массива:")
+mas2 = ['Hello', 'My', "Name", "Nikita"]
+print(mas2)
+mas2[3] = "Igor"
+print(mas2)
+mas2[3] = 5
+print(mas2)
+mas2[2] = True
+print(mas2)
+
+print("\n***Виды массивов:")
+var1 = [5, 6]  # Лист(Список)
+var2 = {"Ящик1": 5, "Ящик2": 6}  # Словарь
+var3 = (5, 6)  # Кортеж
+
+print(var1, var2, var3)
+
+# Задание - Хотим получить чифру 6
+print(var1[1])
+print(var2["Ящик2"])
+
+print("\n***Тема: переменная и ссылка на переменную:")
+# Создаем
+list1 = [5, 6]
+list2 = [7, 8]
+# Печатаем
+print(list1, list2)
+# Изменяем
+list1[0] = 8
+# Снова печатаем
+print(list1, list2)
+# Присвайваем (тобишь даем ссылку на list2 в переменную list1)
+list1 = list2
+# Снова печатаем
+print(list1, list2)
+# Изменим только list2
+list2[1] = 0
+# Снова печатаем
+print(list1, list2)  # Тут измениться и list1 (так как он ссылается на list2)
+
+print("\n***Методы(Функции) списков(словарей):")
+list1 = [5, 6]
+print(list1)
+list1.append(7)
+print(list1)
+list1.reverse()
+print(list1)
+list1.clear()
+print(list1)
+
+print("\n***Сортировка значений в массиве:")
+list2 = [5, 6, 1, 0, 9, 11]
+print(list2)
+list2.sort(reverse=True)
+print(list2)
+list2.reverse()
+print(list2)
+
+print("\n**Функция dict():")
+var1 = ["Ящик1", 4]
+var2 = ["Ящик2", 5]
+var3 = dict([var1, var2])
+print(var3)
+
+print("\n**Функция get():")
+var2 = {"Ящик1": 5, "Ящик2": 6}
+print(var2.get("Ящик1"))  # одно и тоже
+print(var2["Ящик1"])      # одно и тоже
 print("\nМножественное присваивание")
 a = b = c = 5
 print(a, b, c)
