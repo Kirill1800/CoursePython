@@ -1,3 +1,13 @@
+import random
+from Source import fare1, fare2   # Выборочно переменные
+from Source import *              # Весь файл
+from termcolor import cprint
+
+# Есть функции которые сразу доступны - range()
+# Есть функции которые находятся у тебя на компьютере но доступны только после import - random()
+# Есть функции которые нужно скачивать с интернета - termcolor
+
+
 print(range(10))  # Создает массив с цифрами от 0 до 10
 
 print()
@@ -15,7 +25,7 @@ print()
 for i in range(1, 20):
     print(i)
 
-# 2 - способ использования for
+# 2 - способ использования for (5 раз выведет цифру 9)
 lst = ["one", "two", "three", "4", 5]
 for i in lst:
     print(9)
@@ -38,6 +48,27 @@ while True:
         break
 print()
 
+print("-------------------------------------------- Цикл WHILE (бесконечный цикл)")
+
+# 1 - бесконечный
+while False:
+    print("G")
+    pass
+    pass
+
+# 2 - бесконечный
+# num = 1
+# while num < 10:
+#     print("Jason Statham")
+
+print("-------------------------------------------- True False")
+
+val = True
+while val:
+    print("ooo")
+    val = not val  # тоже самое: val = False
+    pass  # просто заглушка
+
 print("-------------------------------------------- Условный оператор IF-ELIF-ELSE")
 
 count = 10
@@ -50,22 +81,36 @@ else:
 
 print("-------------------------------------------- Игра угадай число от 1 до 20 (5 попыток) ")
 
-import random
+x = False
+if x:
+    number = random.randint(1, 20)  # Рандом от 1 до 20
+    guesses = 0
+    while guesses < 3:
+        print('Напишите число от 1 до 20: ')
+        guess = int(input())  # вводим число
+        guesses += 1  # увеличиваем попытку
+        if guess == number:
+            print('Успех!')
+            print('Вы угадали число. ' + str(guesses))
+            break
+        elif guess < number:
+            print('Число слишком маленькое. Попробуй еще.')
+        elif guess > number:
+            print('Число слишком большое. Попробуй еще.')
+    print('Ты не угадал число. Исходное число: ' + str(number))
 
-number = random.randint(1, 20)  # Рандом от 1 до 20
-guesses = 0
-while guesses < 5:
-    print('Напишите число от 1 до 20: ')
-    guess = int(input())
-    guesses += 1
-    if guess == number:
-        print('Успех!')
-    if guess < number:
-        print('Число слишком маленькое. Попробуй еще.')
-    if guess > number:
-        print('Число слишком большое. Попробуй еще.')
-    if guesses == 5:
-        print('Ты не угадал число. Исходное число: ' + str(number))
-    if guess == number:
-        print('Вы угадали число. ' + str(guesses))
-        break
+print("-------------------------------------------- Вложенный цикл ")
+
+items1 = [1, 2, 3, 4]
+items2 = [6, 7, 8, 9]
+
+for x in items1:
+    print(x, end=' ')
+    if x == 4:
+        continue
+    # При четвертой итерации первого цикла сработает continue что повлечет пропуск вложенного цикла
+    for y in items2:
+        print(y, end=' ')
+
+print()
+print(fare1, fare2)
