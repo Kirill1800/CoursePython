@@ -11,6 +11,7 @@ try:
 except NameError:
     print("Была ошибка")
 
+
 print("\nError 3")
 try:
     a = 8
