@@ -114,4 +114,6 @@ for x in items1:
 
 print()
 print(fare1, fare2)
+cprint(str(fare1) + " " + str(fare2), "green")
+
 cprint(str(fare1) + "" + str(fare2), "red")

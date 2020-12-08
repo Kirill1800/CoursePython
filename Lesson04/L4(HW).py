@@ -1,19 +1,38 @@
-a = b = c = 7
-while a == b == c:
-    print("YES")
-    a += 1
-    print('ERROR')
-print("\nСлайд79 №2")
-a = 12
-b = 5
-c = 17
-while a + b == c:
-    print("YES")
-    a -= 1
-    print("ERROR")
+# a = b = c = 7
+# while a == b == c:
+#     print("YES")
+#     a += 1
+#     print('ERROR')
+#
+#
+#
+# print("\nСлайд79 №2")
+# a = 10
+# b = 20
+# c = 10
+#
+# flag = False
+# for i in range(2):
+#     if i == 0:
+#         if a + b == c:
+#             flag = True
+#     if i == 1:
+#         if a + c == b:
+#             flag = True
+#
+# if flag:
+#     print("YES")
+# else:
+#     print("ERROR")
+
+
+
+
 # print("\nСлайд80 №1")
 # for i in range(1, 14):
 # print(i + i)
+
+
 
 mas = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресение"]
 number = 1
