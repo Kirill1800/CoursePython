@@ -25,7 +25,7 @@ print()
 for i in range(1, 20):
     print(i)
 
-# 2 - способ использования for (5 раз выведет цифру 9)
+# 2 - способ использования for
 lst = ["one", "two", "three", "4", 5]
 for i in lst:
     print(9)
@@ -114,3 +114,4 @@ for x in items1:
 
 print()
 print(fare1, fare2)
+cprint(str(fare1) + "" + str(fare2), "red")
