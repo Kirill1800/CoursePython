@@ -1,4 +1,68 @@
 # Объявление процедуры
+def func1():
+    x = 5 + 7
+    print(range(2, 99))
+    print(str(288))
+    print("Hello\n")
+    print(x)
+
+
+# Вызов процедуры
+# func1()
+
+# func1()
+
+# func1()
+
+
+# Отличие процедуры от функции в том, что процедура просто выполняет действия
+# А функция выполняет её и ещё возвращает
+
+# Объявление функции
+def func2():
+    x = 5 + 7
+    print(range(2, 99))
+    print(str(288))
+    print("Hello")
+    return x + 8  # То что функция вернёт ( то чему она будет равна )
+
+
+# Вызов функции
+
+y = func2()
+print(y)
+
+
+def funk3(on=False):
+    if on:
+        lst = []
+        for i in range(10):
+            lst.append(i)
+        return (lst, lst)
+
+
+print("Вызов 1", funk3(True))
+print("Вызов 2", funk3(False))
+print("Вызов 3", funk3())
+
+
+def func4(x1, x2, operation):
+    if operation == "+":
+        return x1 + x2
+    elif operation == "*":
+        return x1 * x2
+    else:
+        return "Операция функции не известна"
+
+
+print()
+print(func4(2, 6, "+"))
+print(func4(5, 3, operation="*"))
+print(func4(x1=4, x2=9, operation="+"))
+print(func4(x1=float(input()), x2=float(input()), operation=input()))
+
+
+# Объявление процедуры
 
 
 def func1():
@@ -141,7 +205,6 @@ def lam2(x, y, z):  # Длинная запись
 
 print("Пример Lambda (x * y + z):", lam1(2, 3, 4))
 print("Пример Lambda (x * y + z):", lam2(2, 3, 4))
-
 
 print("-------------------------------------------- Пример использования args*")
 
