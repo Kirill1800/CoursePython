@@ -38,8 +38,35 @@ class ColorAlpha(Color):
 gray_2 = Color(100, 100, 100)
 
 blue = 40
-red = ColorAlpha(255, 0, 0, 0.5)  # Создаем объект red
-print(type(blue), type(red))  # Печатаем типы данных переменных red и blue
-print(red.to_hex())  # Печатем результат выполнения метода to.hex() для объекта red
-print(red.sum_rgb())  # Печатем результат выполнения метода sum_rgb() для объекта red
+obj = ColorAlpha(255, 0, 0, 0.5)  # Создаем объект red
 
+print(ColorAlpha(255, 0, 0, 0.5))  # <__main__.ColorAlpha object at 0x7fdbc0207220>
+print(ColorAlpha)  # <class '__main__.ColorAlpha'>
+
+print(type(blue), type(obj))  # Печатаем типы данных переменных red и blue
+print(obj.red, obj.green)  # Печатаем параметры класса (а именно параметры объекта red)
+print(obj.to_hex())  # Печатем результат выполнения метода to.hex() для объекта red
+print(obj.sum_rgb())  # Печатем результат выполнения метода sum_rgb() для объекта red
+
+print()
+
+
+# Класс Апельсинов
+class Orange:
+
+    # Инициализация класса (выполняется всегда при создании объекта)
+    def __init__(self, w, c):
+        self.weight = w
+        self.color = c
+        print("Наш объект создан!")
+
+
+or1 = Orange(10, "Желтый")
+or2 = Orange(10, "Оранжевый")
+or3 = Orange(5, "Зеленый")
+
+print(or1.color)
+or1.color = "Синий"
+print(or1.color)
+
+# 41
