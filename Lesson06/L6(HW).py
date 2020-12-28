@@ -175,4 +175,10 @@ def get_data_json(json):
 
 # url = "http://www.nbrb.by/statistics/Rates/RatesDaily.asp"
 url = "http://www.nbrb.by/API/ExRates/Rates?Periodicity=0"
-get_data_json(get_json(url))
+
+# get_data_json(get_json(url))
+
+temp = get_json(url)
+print(temp)
+
+get_data_json(temp)

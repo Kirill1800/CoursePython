@@ -55,7 +55,21 @@ def func4(x1, x2, operation):
         return "Операция функции не известна"
 
 
-print()
+class Calc:
+    result = None  # Наше табло в калькуляторе
+
+    def __init__(self, x1, x2, operation):
+        if operation == "+":
+            self.result = x1 + x2
+        elif operation == "*":
+            self.result = x1 * x2
+
+
+print("Calc")
+calc1 = Calc(x1=4, x2=9, operation="+")
+print(calc1.result)
+
+print("Func")
 print(func4(2, 6, "+"))
 print(func4(5, 3, operation="*"))
 print(func4(x1=4, x2=9, operation="+"))
