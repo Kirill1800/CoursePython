@@ -31,6 +31,31 @@ def get_message():
     return result
 
 
+# ОТПРАВЛЯТЬ Сообщения
+def send_message(chat_id, text):
+    import requests
+    result = requests.get(URL + 'sendmessage?chat_id={}&text={}'.format(chat_id, text))
+    return result
+    # return "Сообщение отправленно"
+
+
+flag = False
 while True:
-    print(get_message())
-    sleep(2)
+    answer = get_message()
+    if not flag:
+        if answer['text'] == "привет":
+            send_message(chat_id=answer['chat_id'], text="И тебе привет!")
+            flag = True
+        if answer['text'] == "пока":
+            send_message(chat_id=answer['chat_id'], text="И тебе пока!")
+            flag = True
+        else:
+            # answer["text"] = "5+8"
+            try:
+                x = answer["text"].split("+")
+                result = int(x[0]) + int(x[1])
+                send_message(chat_id=answer['chat_id'], text=str(result))
+                flag = True
+            except:
+                send_message(chat_id=answer['chat_id'], text="Ничего")
+
