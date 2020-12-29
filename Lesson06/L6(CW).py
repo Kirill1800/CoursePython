@@ -58,6 +58,10 @@ class Orange:
     color = None  # Цвет
     state = "Не создан"  # В каком состоянии у нас апельсин
 
+    weight = None
+    color = None
+    state = "Не создан"
+
     # Инициализация класса (выполняется всегда при создании объекта)
     def __init__(self, w, c):
         self.weight = w
@@ -70,18 +74,41 @@ class Orange:
         self.state = "Сгнил"
         # print("Апельсин сгниет через {} дней! Его цвет: {} Размер: {}".format(days, self.color, self.weight))
 
+    def rot(self, days):
+        self.state = "Сгнил"
+
+        #  print("Апельсин сгнил через {} дней! Его цвет: {} Размер:{}".format(days, self.color, self.weight))
+
 
 or1 = Orange(10, "Желтый")
 or2 = Orange(10, "Оранжевый")
 or3 = Orange(5, "Зеленый")
+or2.rot(days=5)
+
 
 or2.rot(days=5)  # Вызов метода гниения конкретно для объекта "or2"
 
 print(or1.color)
 or1.color = "Синий"
 print(or1.color)
+print()
+print()
 
-# 41
+or4 = Orange(50, "Красный")
+print(or4.state)
+or4.rot(days=5)
+print(or4.state)
+
+
+x = [5, 6]
+a = 3
+b = 4.0
+c = a + b
+print(c)
+
+del or2
+
+
 print()
 print()
 
