@@ -26,12 +26,12 @@ def get_message():
     #  return result
 
 
-def main():
-    d = get_updates()
-    get_message()
-
-    with open('updates.json', 'w') as file:
-        json.dump(d, file, indent=2, ensure_ascii=False)
+# def main():
+#     d = get_updates()
+#     get_message()
+#
+#     with open('updates.json', 'w') as file:
+#         json.dump(d, file, indent=2, ensure_ascii=False)
 
 
 def write_json(data, file_name='answer.json'):
@@ -43,4 +43,6 @@ def main():
     r = requests.get(URL + 'getMe')
     write_json(r.json())
 
-#  if __name__ == '__maim__':
+
+if __name__ == '__main__':
+    main()
