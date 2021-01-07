@@ -56,6 +56,16 @@ while True:
             bot.send_message(bot.MESSAGE_INCOMING['chat_id'], "И тебе привет!")
         elif bot.MESSAGE_INCOMING['text'] == "Пока":
             bot.send_message(bot.MESSAGE_INCOMING['chat_id'], "Удачи, пока!")
+        elif bot.MESSAGE_INCOMING['text'] == "test1":
+            x = rates.get_table()
+            bot.send_message(bot.MESSAGE_INCOMING['chat_id'], str(x[5]["Cur_Name"]) + str(x[5]["Cur_OfficialRate"]))
+        elif bot.MESSAGE_INCOMING['text'] == "/all":
+            x = rates.get_table()
+            answer = ""
+            for i in x:
+                answer += str(i["Cur_OfficialRate"]) + " -  " + str(i["Cur_Name"]) + "\n"
+            bot.send_message(bot.MESSAGE_INCOMING['chat_id'], answer)
+
         elif bot.MESSAGE_INCOMING['text'] == "/play":
             flag_game = True
             number_random = random.randint(1, 20)

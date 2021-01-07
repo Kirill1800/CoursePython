@@ -28,7 +28,7 @@ class ParserNBRB:
             if cur['Cur_Abbreviation'] == abbreviation:
                 return cur
 
-    # Возвращает словарь с валютами
+    # Возвращает словарь с всеми валютами в JSON формате
     def get_table(self):
         table = list()
         for cur in self.JSON:

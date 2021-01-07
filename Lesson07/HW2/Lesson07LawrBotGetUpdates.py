@@ -73,7 +73,7 @@ class BotGetUpdates:
 
     # Проверка и сравнение pre_update_id и update_id, и выставление флага.
     def check_flag_update_id(self):
-        print(self.FLAG_SEND, self.PRE_APDATE_ID, self.MESSAGE_INCOMING['update_id'])
+        # print(self.FLAG_SEND, self.PRE_APDATE_ID, self.MESSAGE_INCOMING['update_id'])
         if self.MESSAGE_INCOMING['update_id'] == self.PRE_APDATE_ID:  # Если текущий = предыдыдущему
             self.FLAG_SEND = False  # (Отвечать не нужно)
         if self.MESSAGE_INCOMING['update_id'] != self.PRE_APDATE_ID:  # Если текущий != предыдыдущему
