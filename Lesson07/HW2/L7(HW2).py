@@ -15,6 +15,7 @@ flag_game = False
 
 # Запускаем бесконечный цикл
 while True:
+    sleep(2)
 
     # Обновление Данных (первоначально данные все в JSON)
     rates.update_json()
