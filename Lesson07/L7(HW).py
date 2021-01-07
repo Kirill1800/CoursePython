@@ -17,7 +17,6 @@ def get_updates():
     return r.json()
 
 
-# Получает последнее сообщение
 def get_message():
     data = get_updates()
 
