@@ -1,5 +1,5 @@
 # Класс бота, который работает используя requests (запросы в getupdates)
-class LawrBotGetUpdates:
+class BotGetUpdates:
     # И Н Ф О Р М А Ц И Я
     # Получать обновления от телеграм можно через: 1) getupdates 2) Webhook
     #    1) Если "getupdates" - то работаем просто через [requests.post / requests.get]

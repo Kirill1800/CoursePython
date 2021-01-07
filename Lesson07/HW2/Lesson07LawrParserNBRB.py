@@ -1,5 +1,5 @@
 # Класс отвечающий за парсинг/отображение/вывод валют
-class LawrParserNBRB:
+class ParserNBRB:
     JSON = None  # Ответ от сайта в JSON формате (все курсы валют)
     FILE_JSON = None  # Объект открытого файла Lesson07(ClassWork).json
 

@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "result": [
+    {
+      "update_id": 734864800,
+      "message": {
+        "message_id": 329,
+        "from": {
+          "id": 975713238,
+          "is_bot": false,
+          "first_name": "Сергей",
+          "last_name": "Константинович",
+          "language_code": "ru"
+        },
+        "chat": {
+          "id": 975713238,
+          "first_name": "Сергей",
+          "last_name": "Константинович",
+          "type": "private"
+        },
+        "date": 1610025930,
+        "text": "jomnlm"
+      }
+    }
+  ]
+}
