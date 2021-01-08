@@ -8,7 +8,6 @@ class BotGetUpdates:
     # Работать с Flask можно через: 1) localhost 2) Тунель HTTP (localhost.run) 2) Тунель HTTPS (ngrok.com)
 
     # А Т Р И Б У Т Ы
-    COUNT_Debug = 1  # Счетчик сообщений от debugging
     JSON = None  # Ответ от бота в JSON формате (все сообщения пользователя)
     HELP = "Help"
     FILE_JSON = None  # Объект открытого файла Lesson07(ClassWork).json
@@ -16,7 +15,7 @@ class BotGetUpdates:
     MESSAGE_SENT = None  # Сообщение Отправленное
 
     FLAG_SEND = False  # Флаг отслеживающий нужно ли отвечать боту на последнее сообщение (или уже ответил)
-    PRE_APDATE_ID = None  # Содержит в себе update_id предпоследнего сообщения входящего (которое мы отправляем).
+    PRE_AP_DATE_ID = None  # Содержит в себе update_id предпоследнего сообщения входящего (которое мы отправляем).
 
     # Инициализаци/создание бота
     def __init__(self, token):
@@ -47,15 +46,19 @@ class BotGetUpdates:
         global n
         n = number
         # Вытягивем из JSON данные относящиеся к сообщению под номером "number"
-        update_id = self.JSON['result'][number]['update_id']
-        chat_id = self.JSON['result'][number]['message']['chat']['id']
-        date = self.JSON['result'][number]['message']['date']
-        text = self.JSON['result'][number]['message']['text']
-        # Формируем словарь на основе вытянутых данных
-        self.MESSAGE_INCOMING = {'chat_id': chat_id, 'update_id': update_id, 'date': date, 'text': text}
-        # Проверяем и выставляем "FLAG_SEND"
-        self.check_flag_update_id()
-        return self.MESSAGE_INCOMING
+        try:
+            update_id = self.JSON['result'][number]['update_id']
+            chat_id = self.JSON['result'][number]['message']['chat']['id']
+            date = self.JSON['result'][number]['message']['date']
+            text = self.JSON['result'][number]['message']['text']
+            # Формируем словарь на основе вытянутых данных
+            self.MESSAGE_INCOMING = {'chat_id': chat_id, 'update_id': update_id, 'date': date, 'text': text}
+            # Проверяем и выставляем "FLAG_SEND"
+            self.check_flag_update_id()
+            return self.MESSAGE_INCOMING
+        except IndexError:
+            print("Нет сообщений")
+            return None
 
     # ОТПРАВЛЯТЬ Сообщения
     def send_message(self, chat_id, text):
@@ -73,9 +76,9 @@ class BotGetUpdates:
 
     # Проверка и сравнение pre_update_id и update_id, и выставление флага.
     def check_flag_update_id(self):
-        # print(self.FLAG_SEND, self.PRE_APDATE_ID, self.MESSAGE_INCOMING['update_id'])
-        if self.MESSAGE_INCOMING['update_id'] == self.PRE_APDATE_ID:  # Если текущий = предыдыдущему
+        # print(self.FLAG_SEND, self.PRE_AP_DATE_ID, self.MESSAGE_INCOMING['update_id'])
+        if self.MESSAGE_INCOMING['update_id'] == self.PRE_AP_DATE_ID:  # Если текущий = предыдыдущему
             self.FLAG_SEND = False  # (Отвечать не нужно)
-        if self.MESSAGE_INCOMING['update_id'] != self.PRE_APDATE_ID:  # Если текущий != предыдыдущему
+        if self.MESSAGE_INCOMING['update_id'] != self.PRE_AP_DATE_ID:  # Если текущий != предыдыдущему
             self.FLAG_SEND = True  # (Отвечать нужно)
-        self.PRE_APDATE_ID = self.MESSAGE_INCOMING['update_id']
+        self.PRE_AP_DATE_ID = self.MESSAGE_INCOMING['update_id']

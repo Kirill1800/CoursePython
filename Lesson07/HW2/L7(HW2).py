@@ -3,8 +3,6 @@ from Lesson07LawrParserNBRB import ParserNBRB
 from Lesson07LawrBotGetUpdates import BotGetUpdates
 import random
 
-sleep(5)  # Заснет на 5 секунд
-
 # Создание Объектов (бот и парсер)
 bot = BotGetUpdates("1420906671:AAFYtk31Zd2Ftyqc58S4hJVJFzL0FO3TVUs")  # создание бота
 rates = ParserNBRB("http://www.nbrb.by/API/ExRates/Rates?Periodicity=0")  # создание парсера
@@ -15,7 +13,6 @@ flag_game = False
 
 # Запускаем бесконечный цикл
 while True:
-    sleep(2)
 
     # Обновление Данных (первоначально данные все в JSON)
     rates.update_json()
@@ -23,12 +20,10 @@ while True:
 
     # Получаем последнее сообщение -> Формируем "self.MESSAGE_INCOMING"
     bot.get_message(-1)
-    # print(bot.MESSAGE_INCOMING)
+    # print(bot.MESSAGE_INCOMING['text'])
 
     #  Отвечаем на последние сообщение
-
     if flag_game:
-
         try:
             number_input = int(bot.MESSAGE_INCOMING['text'])
 
@@ -39,12 +34,9 @@ while True:
             elif number_random < number_input:
                 bot.send_message(bot.MESSAGE_INCOMING['chat_id'], 'Игра остановлена. Число слишком большое. {}'.format(str(number_random)))
             flag_game = False
-
         except ValueError:
             pass
-
     else:
-
         # Чтобы не писать много "if" генерируем основании списка полученного из rates.list_cur_abbreviation()
         for cur_abb in rates.list_cur_abbreviation():
             if bot.MESSAGE_INCOMING['text'] == "/" + cur_abb.swapcase():
@@ -65,7 +57,6 @@ while True:
             for i in x:
                 answer += str(i["Cur_OfficialRate"]) + " -  " + str(i["Cur_Name"]) + "\n"
             bot.send_message(bot.MESSAGE_INCOMING['chat_id'], answer)
-
         elif bot.MESSAGE_INCOMING['text'] == "/play":
             flag_game = True
             number_random = random.randint(1, 20)
