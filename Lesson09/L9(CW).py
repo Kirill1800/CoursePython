@@ -4,8 +4,8 @@ print("-------------------------------------------- Методы объекта 
 
 text = "I Love You!"
 print("Исходная строка:", text)
-print("Возвращает номер первого вхождения:", text.rfind("Love"))
-print("Возвращает номер первого вхождения:", text.index("Love"))
+print("Возвращает номер первого вхождения:", text.rfind("You"))
+print("Возвращает номер первого вхождения:", text.index("You"))
 print("Заменяет символы из строки, на указанные:", text.replace("Love", "LOVE"))
 print("Разрезает строку в месте введенного символа:", text.split(" "))
 
@@ -15,7 +15,7 @@ print("-------------------------------------------- Табуляция и Нов
 print("Бла, бла, бла\t123456")
 print("Бла, бла, бла\t000000")
 # Новая строка
-print("Привет\nМир")
+print("Привет\n\nМир")
 
 print("-------------------------------------------- Сырая строка")
 
@@ -43,3 +43,12 @@ print(r"[\w\W] (Любая цифра/буква):           ", re.findall(r"Pyt
 print(r"[\d\D] (Любая цифра):                 ", re.findall(r"Python\D\d\d\d", text))
 print(r"[\s\S] (Любой пробел):                ", re.findall(r"Python\s", text))
 print(r"[ 6]   (Любой из символов в скобке):  ", re.findall(r"Python[ 6][ 6][ 6][ 6]", text))
+
+
+# ДЗ
+# 1. os, random и datetime (timedelta)
+# 2. Просмотри презентацию
+
+import datetime
+
+print(datetime.datetime.now())
