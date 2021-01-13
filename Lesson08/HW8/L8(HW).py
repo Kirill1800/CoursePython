@@ -16,7 +16,7 @@ my_html = site.text  # Возвращает HTML ответ
 #  print(my_json)
 
 image = requests.get('https://learn.python.ru/media/projects/sl1_Cj4bKxp.png')
-with open('new_image.png', 'wb') as f:
+with open('../new_image.png', 'wb') as f:
     f.write(image.content)
 #  f.remove('new_image.png')
 
