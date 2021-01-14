@@ -43,12 +43,3 @@ print(r"[\w\W] (Любая цифра/буква):           ", re.findall(r"Pyt
 print(r"[\d\D] (Любая цифра):                 ", re.findall(r"Python\D\d\d\d", text))
 print(r"[\s\S] (Любой пробел):                ", re.findall(r"Python\s", text))
 print(r"[ 6]   (Любой из символов в скобке):  ", re.findall(r"Python[ 6][ 6][ 6][ 6]", text))
-
-
-# ДЗ
-# 1. os, random и datetime (timedelta)
-# 2. Просмотри презентацию
-
-import datetime
-
-print(datetime.datetime.now())
