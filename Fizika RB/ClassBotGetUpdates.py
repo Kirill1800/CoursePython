@@ -1,4 +1,13 @@
-class BotGetUpdates1:
+# Класс бота, который работает используя requests (запросы в GetUpdates)
+class BotGetUpdates:
+
+    # И Н Ф О Р М А Ц И Я
+    # Получать обновления от телеграм можно через: 1) GetUpdates 2) Webhook
+    #    1) Если "GetUpdates" - то работаем просто через [requests.post / requests.get]
+    #    2) Если "Webhook"    - то работаем через [Django / Flask]
+    # Работать с Flask можно через: 1) localhost 2) Тунель HTTP (localhost.run) 2) Тунель HTTPS (ngrok.com)
+
+    # А Т Р И Б У Т Ы
     JSON = None  # Ответ от бота в JSON формате (все сообщения пользователя)
     HELP = "Help"
     FILE_JSON = None  # Объект открытого файла Lesson07(ClassWork).json
@@ -6,8 +15,9 @@ class BotGetUpdates1:
     MESSAGE_SENT = None  # Сообщение Отправленное
 
     FLAG_SEND = False  # Флаг отслеживающий нужно ли отвечать боту на последнее сообщение (или уже ответил)
-    PRE_AP_DATE_ID = None  # Содержит в себе update_id предпоследнего сообщения входящего (которое мы отправляем).    def __init__(self, token):
+    PRE_AP_DATE_ID = None  # Содержит в себе update_id предпоследнего сообщения входящего (которое мы отправляем).
 
+    # Инициализаци/создание бота
     def __init__(self, token):
         import requests
         self.TOKEN = token
@@ -23,7 +33,7 @@ class BotGetUpdates1:
         return self.JSON
 
     # ЗАПИСАТЬ JSON В ФАЙЛ (с форматирование)
-    def write_json(self, filename='Fizika.json'):
+    def write_json(self, filename='Lesson07(HomeWork).json'):
         import json
         # Создаем object_filename(открытый для записи файловый объект) привязанный к файлу "filename"
         with open(filename, 'w') as self.FILE_JSON:
