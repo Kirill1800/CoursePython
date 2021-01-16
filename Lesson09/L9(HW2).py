@@ -3,6 +3,8 @@ from datetime import timedelta
 import random
 import os
 
+# --------------- datetime ---------------
+
 d = timedelta(hours=4)
 print(d)
 
@@ -16,10 +18,12 @@ result = str(result)
 print(result)
 e = datetime.strptime(result[0:19], '%Y-%m-%d %H:%M:%S')
 print(e - timedelta(days=365))
+
 # --------------- random ---------------
+
 print(random.randint(1, 30))
 print(random.random())
-print(random.uniform(100, 1000))
+print(random.uniform(100, 1000))  # Рандомное число с павающей точкой
 
 # --------------- os ---------------
 
