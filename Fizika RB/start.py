@@ -23,7 +23,7 @@ while True:
 
     #  Отвечаем на последние сообщение
     if (bot.MESSAGE_INCOMING['text'] == "/help") or (bot.MESSAGE_INCOMING['text'] == "/start"):
-        text = "Список звезд:\n"
+        text = "СПИСОК АСТЕРОИДОВ:\n"
         for i in values:
             try:
                 text += "/" + i[0].split("(")[1].replace(")", "") + "  "
@@ -53,4 +53,4 @@ while True:
                     j += 1
                 except IndexError:
                     pass
-            bot.send_message(bot.MESSAGE_INCOMING['chat_id'], text)
+
