@@ -44,7 +44,7 @@ def base():
 </ul>
 </div>'''
 
-    return render_template("base.html", TITLE=text, BODY=body)
+    return render_template("base.html", TITLE=text, BODY="<h1>Привет</h1>")
 
 
 # @app.route('/home')
