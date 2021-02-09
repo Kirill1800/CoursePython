@@ -8,8 +8,8 @@
   <meta name="HandheldFriendly" content="true">
   <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Simonetta:400,900|Balthazar">
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <link rel="stylesheet" type="text/css" href="responsive.css">
+  <link rel="stylesheet" type="text/css" href="/static/styles.css">
+  <link rel="stylesheet" type="text/css" href="/static/responsive.css">
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -20,8 +20,8 @@
 	<div id="w" itemscope itemtype="http://schema.org/Person">
 		<header class="clearfix">
 			<div id="info">			
-				<h1><span itemprop="name">Jake Rocheleau</span></h1>
-				<h3><span itemprop="jobTitle">Freelance Writer &amp; Web Developer</span></h3>
+				<h1><span itemprop="name">Kirill Glushakov</span></h1>
+				<h3><span itemprop="jobTitle">Python programmer &amp; Web Developer</span></h3>
 				<small itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 				  <span itemprop="addressLocality">Hudson</span>, 
 				  <span itemprop="addressRegion">Massachusetts</span>, 
@@ -32,7 +32,7 @@
 			</div>
 			
 			<div id="photo">
-				<img src="images/jake-rocheleau-250.jpg" alt="Jake Rocheleau resume photo avatar" itemprop="image" />
+				<img src="/static/images/jake-rocheleau-250.jpg" alt="Jake Rocheleau resume photo avatar" itemprop="image" />
 			</div>
 		</header>
 		
@@ -46,26 +46,21 @@
 		<section id="skills" class="clearfix" itemscope itemtype="http://schema.org/ItemList">
 			<h2 itemprop="name">Skillset</h2>
 			<section id="skills-left">
-				<h4 itemprop="about">Development</h4>
+				<h4 itemprop="about">{{ SKILL_TITLE }}</h4>
 				<ul>
-					<li itemprop="itemListElement">HTML5/CSS3</li>
-					<li itemprop="itemListElement">JavaScript &amp; jQuery</li>
-					<li itemprop="itemListElement">PHP Backend</li>
-					<li itemprop="itemListElement">SQL Databases</li>
-					<li itemprop="itemListElement">Wordpress</li>
-					<li itemprop="itemListElement">Pligg CMS</li>
-					<li itemprop="itemListElement">Some Objective-C</li>
+					{% for s in SKILL %}
+					    <li itemprop="itemListElement">{{ s }}</li>
+					{% endfor %}
 				</ul>
 			</section>
 			
 			<section id="skills-right">
-				<h4 itemprop="about">Software</h4>
+				<h4 itemprop="about">{{ SOFTWARE }}</h4>
 				<ul>
-					<li itemprop="itemListElement">Adobe Photoshop</li>
-					<li itemprop="itemListElement">Adobe Dreamweaver</li>
-					<li itemprop="itemListElement">MS Office 2007-2010</li>
-					<li itemprop="itemListElement">cPanel &amp; phpMyAdmin</li>
-					<li itemprop="itemListElement">Xcode 4</li>
+					{% for f in SOFT%}
+					    <li itemprop="itemListElement">{{ f }}</li>
+					{% endfor %}
+
 				</ul>
 			</section>
 		</section>
