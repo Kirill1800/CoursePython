@@ -22,6 +22,7 @@
 			<div id="info">			
 				<h1><span itemprop="name">Kirill Glushakov</span></h1>
 				<h3><span itemprop="jobTitle">Python programmer &amp; Web Developer</span></h3>
+				<br>
 				<small itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 				  <span itemprop="addressLocality">Slutsk</span>,
 				  <span itemprop="addressRegion">Minsk region</span>,
@@ -71,13 +72,12 @@
 		</section>
 		
 		<section id="experience">
-			<h2>{{ WORK_EXPERIENCE }}</h2>
-			<p>
-				{% for e in EXPERIENCE %}
+			<h2><font face="Tahoma">{{ WORK_EXPERIENCE }}</font></h2>
+			<ul>
+				{% for f in EXPERIENCE %}
 			        <li itemprop="itemListElement">{{ f }}</li>
 			    {% endfor %}
-
-			</p>
+			</ul>
 		</section>
 		
 		<section id="articles">
