@@ -8,7 +8,8 @@ def index():
     title = "Мое резюме"
     return render_template("index.html", TITLE=title, SKILL=skill_development(),
                            SKILL_TITLE=skill_development(mode="Title"), SOFT=new_skills(),
-                           SOFTWARE=new_skills(mode="Title"))
+                           SOFTWARE=new_skills(mode="Title"), EXPERIENCE=experience(),
+                           WORK_EXPERIENCE=experience(mode="Title"))
 
 
 def skill_development(mode=None):
@@ -27,6 +28,17 @@ def new_skills(mode=None):
         result = ["Adobe Photoshop", "Adobe Dreamweaver", "MS Office 2007-2010", "cPanel &amp;phpMyAdmin", "Xcode 4"]
     elif mode == "Title":
         result = "Программное обеспечение"
+    else:
+        result = "Ошибка"
+    return result
+
+
+def experience(mode=None):
+    if not mode:
+        result = ["Freelance Web Designer/Developer ~ 2007-2009", "Best Buy - Geek Squad In-Store Agent ~ 2008-2009",
+                  "Freelance Writer for Hongkiat.com ~ 2011-Present"]
+    elif mode == "Title":
+        result = "Опыт работы"
     else:
         result = "Ошибка"
     return result
