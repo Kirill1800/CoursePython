@@ -10,6 +10,7 @@
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Simonetta:400,900|Balthazar">
   <link rel="stylesheet" type="text/css" href="/static/styles.css">
   <link rel="stylesheet" type="text/css" href="/static/responsive.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
@@ -19,7 +20,14 @@
 <body>
 	<div id="w" itemscope itemtype="http://schema.org/Person">
 		<header class="clearfix">
-			<div id="info">			
+
+
+
+
+			<div class="container">
+			  <div class="row">
+				<div class="col-6">
+					 <div id="info">
 				<h1><span itemprop="name">Kirill Glushakov</span></h1>
 				<h3><span itemprop="jobTitle">Python programmer &amp; Web Developer</span></h3>
 				<br>
@@ -31,10 +39,25 @@
 				<small><span itemprop="email">kirill.glushakov@mail.ru</span></small>
 				<small><a href="http://byjakewithlove.com/" itemprop="url">My Portfolio</a> &bull; <a href="https://vk.com/id349936338" itemprop="url">@kirillglush</a></small>
 			</div>
-			
-			<div id="photo">
-				<img src="/static/images/jake-rocheleau-250.jpg" alt="Jake Rocheleau resume photo avatar" itemprop="image" />
+				</div>
+				<div class="col-6">
+	<div id="photo">
+				<img src="/static/images/my_photo.jpg" width="90%" itemprop="image" />
+			</div>				</div>
+			  </div>
 			</div>
+
+
+
+
+
+
+
+			
+
+
+
+
 		</header>
 		
 		<section id="profile">
@@ -72,7 +95,7 @@
 		</section>
 		
 		<section id="experience">
-			<h2><font face="Tahoma">{{ WORK_EXPERIENCE }}</font></h2>
+			<h2>{{ WORK_EXPERIENCE }}</font></h2>
 			<ul>
 				{% for f in EXPERIENCE %}
 			        <li itemprop="itemListElement">{{ f }}</li>
@@ -80,11 +103,9 @@
 			</ul>
 		</section>
 		<section id="information">
-			<h2><font face="Tahoma">{{ INFORMATION }}</font></h2>
+			<h2>{{ INFORMATION }}</font></h2>
 			<ul>
-				{% INFORM %}
-			        <li itemprop="itemListElement">{{ INFORM }}</li>
-			    {% endfor %}
+				<li itemprop="itemListElement">{{ INFORM }}</li>
 			</ul>
 		</section>
 		<section id="articles">
