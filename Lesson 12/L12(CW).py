@@ -24,3 +24,9 @@ collection.delete_many({"Name": ["Кирил", "Игорь"]})
 
 # Обновление данных
 collection.update_many({"Name": ["Кирилл", "Игорь"]}, {"$set": {"Name": ["Кирилл", "Игорь", "Аня"]}})
+
+client = pymongo.MongoClient(string)
+collection2 = client["MyDataBase"]["Test2"]
+data2 = {"Немного обо мне": ["Начинающий программист, есть опыт в написании телеграмм-ботов и сайтов"]}
+collection2.save(data2)
+collection2.update_many({"Name": ["Кирилл", "Игорь"]}, {"$set": {"Name": ["Кирилл", "Игорь", "Аня"]}})

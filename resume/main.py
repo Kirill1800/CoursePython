@@ -1,4 +1,10 @@
 from flask import Flask, render_template, url_for
+import pymongo
+
+string = "mongodb+srv://root:root@cluster0.sygbz.mongodb.net/<dbname>?retryWrites=true&w=majority"
+client = pymongo.MongoClient(string)
+collection = client["MyDataBase"]["Test2"]
+finish = collection.find()[0]
 
 app = Flask(__name__)
 
@@ -9,7 +15,8 @@ def index():
     return render_template("index.html", TITLE=title, SKILL=skill_development(),
                            SKILL_TITLE=skill_development(mode="Title"), SOFT=new_skills(),
                            SOFTWARE=new_skills(mode="Title"), EXPERIENCE=experience(),
-                           WORK_EXPERIENCE=experience(mode="Title"))
+                           WORK_EXPERIENCE=experience(mode="Title"), INFORM=information(),
+                           INFORMATION=information(mode="Title"))
 
 
 def skill_development(mode=None):
@@ -39,6 +46,16 @@ def experience(mode=None):
                   "Freelance Writer for Hongkiat.com ~ 2011-Present"]
     elif mode == "Title":
         result = "Опыт работы"
+    else:
+        result = "Ошибка"
+    return result
+
+
+def information(mode=None):
+    if not mode:
+        result = collection
+    elif mode == "Title":
+        result = "Немного обо мне"
     else:
         result = "Ошибка"
     return result
