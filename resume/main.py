@@ -1,7 +1,6 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template
 import pymongo
 import ssl
-import requests
 
 # collection = client["MyDataBase"]["Test2"]
 # finish = collection.find()[0]
