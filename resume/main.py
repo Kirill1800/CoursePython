@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for
 import pymongo
 import ssl
-
+import requests
 
 # collection = client["MyDataBase"]["Test2"]
 # finish = collection.find()[0]
@@ -16,7 +16,6 @@ client = pymongo.MongoClient(string, ssl=True, ssl_cert_reqs=ssl.CERT_NONE)
 # Основной код
 @app.route('/')
 def index():
-
     # Формирование главной HTML нашего резюме
     title = "Мое резюме"
     return render_template("index.html", TITLE=title, SKILL=skill_development(),
@@ -28,10 +27,9 @@ def index():
 
 def skill_development(mode=None):
     if not mode:
-        result = ["HTML5/CSS", "JavaScript &amp; jQuery", "PHP Backend", "SQL Databases", "Wordpress", "Pligg CMS",
-                  "Some Objective-C"]
+        result = client["MyDataBase"]["Information"].find({"Name": "Развитие-тело"})[0]["result"]
     elif mode == "Title":
-        result = "Развитие"
+        result = client["MyDataBase"]["Information"].find({"Name": "Развитие-заголовок"})[0]["result"]
     else:
         result = "Ошибка"
     return result
@@ -39,9 +37,9 @@ def skill_development(mode=None):
 
 def new_skills(mode=None):
     if not mode:
-        result = ["Adobe Photoshop", "Adobe Dreamweaver", "MS Office 2007-2010", "cPanel &amp;phpMyAdmin", "Xcode 4"]
+        result = client["MyDataBase"]["Information"].find({"Name": "Скиллы-тело"})[0]["result"]
     elif mode == "Title":
-        result = "Программное обеспечение"
+        result = client["MyDataBase"]["Information"].find({"Name": "Скиллы-заголовок"})[0]["result"]
     else:
         result = "Ошибка"
     return result
