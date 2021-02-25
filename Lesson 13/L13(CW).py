@@ -1,7 +1,24 @@
 from selenium import webdriver
 from time import sleep
 from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.common.exceptions import NoSuchElementException
 from datetime import datetime
+
+
+# Функция которая ищет 60 секунд элемент и если не находит False, если находит True
+def check_full_page(_xpath):
+    time = 0
+    while time <= 60:
+        try:
+            browser.find_element_by_xpath(xpath=_xpath)
+            return True
+        except ElementClickInterceptedException:
+            sleep(0.5)
+        except NoSuchElementException:
+            sleep(0.5)
+        time += 0.5
+    return False
+
 
 # Данные для входа
 # kirill.glushakov03@mail.ru : badoopython03
@@ -31,28 +48,27 @@ sleep(1)
 # Нажатие кнопки входа
 submit = browser.find_element_by_name('post')
 submit.click()
-sleep(8)
+sleep(15)
 
 # Запустим страницу
 browser.get("https://badoo.com/encounters")
-print(datetime.now(), "Ждем 20 сек")
-sleep(40)
 
-# xpath = '//use[@xlink:href="#floating-action-yes"]'  # не сработало
-
-
-for i in range(10):
-    try:
-        xpath = '//div[@data-choice="yes"]'
-        submit = browser.find_element_by_xpath(xpath=xpath)
-        submit.click()
-        print(datetime.now(), "Нажали на лайк")
-    except ElementClickInterceptedException:
-        xpath = '//div[@class="btn btn--monochrome js-chrome-pushes-deny"]'
-        submit = browser.find_element_by_xpath(xpath=xpath)
-        submit.click()
-        print(datetime.now(), "Нажали на пропуск")
-    sleep(10)
-
+if check_full_page('//div[@data-choice="yes"]'):
+    for i in range(10):
+        sleep(1)
+        try:
+            if check_full_page('//div[@data-choice="yes"]'):
+                xpath = '//div[@data-choice="yes"]'
+                submit = browser.find_element_by_xpath(xpath=xpath)
+                submit.click()
+                print(datetime.now(), "Нажали на лайк")
+        except ElementClickInterceptedException:
+            if check_full_page('//div[@class="btn btn--monochrome js-chrome-pushes-deny"]'):
+                xpath = '//div[@class="btn btn--monochrome js-chrome-pushes-deny"]'
+                submit = browser.find_element_by_xpath(xpath=xpath)
+                submit.click()
+                print(datetime.now(), "Нажали на пропуск")
 
 # browser.quit()
+
+
