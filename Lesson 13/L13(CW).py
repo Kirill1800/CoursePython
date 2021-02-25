@@ -54,7 +54,7 @@ sleep(15)
 browser.get("https://badoo.com/encounters")
 
 if check_full_page('//div[@data-choice="yes"]'):
-    for i in range(10):
+    for i in range(30):
         sleep(1)
         try:
             if check_full_page('//div[@data-choice="yes"]'):
