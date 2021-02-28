@@ -28,9 +28,9 @@ sleep(3)
 
 browser.find_element_by_xpath(
     "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input").send_keys(
-    "glushakov.kirill")
+    "name")
 browser.find_element_by_xpath(
-    "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[2]/div/label/input").send_keys("kirusha")
+    "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[2]/div/label/input").send_keys("password")
 browser.find_element_by_xpath(
     "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[3]").click()
 sleep(3)
