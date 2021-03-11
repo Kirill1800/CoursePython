@@ -28,9 +28,10 @@ sleep(3)
 
 browser.find_element_by_xpath(
     "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input").send_keys(
-    "name")
+    "kirill.glushakov03@mail.ru")
+sleep(3)
 browser.find_element_by_xpath(
-    "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[2]/div/label/input").send_keys("password")
+    "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[2]/div/label/input").send_keys("instapython")
 browser.find_element_by_xpath(
     "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[3]").click()
 sleep(3)
