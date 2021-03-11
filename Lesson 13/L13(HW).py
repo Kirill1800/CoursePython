@@ -16,9 +16,9 @@ from selenium.common.exceptions import NoSuchElementException
 #  time += 0.5
 #  return False
 
-full = 100
 
-browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\Lesson 13\chrome_driver\chromedriver.exe")
+browser = webdriver.Chrome("/Users/lawr/PycharmProjects/CoursePythonKirill/Lesson 13/chrome_driver/chromedriver_mac64")
+# browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\Lesson 13\chrome_driver\chromedriver.exe")
 
 print(browser)
 
@@ -26,9 +26,9 @@ print(browser)
 browser.get("https://www.instagram.com/accounts/login/?source=reset_password")
 sleep(3)
 
-browser.find_element_by_xpath(
-    "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input").send_keys(
-    "kirill.glushakov03@mail.ru")
+t = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
+t.send_keys("kirill.glushakov03@mail.ru")
+
 sleep(3)
 browser.find_element_by_xpath(
     "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[2]/div/label/input").send_keys("instapython")
@@ -42,63 +42,54 @@ sleep(3)
 browser.find_element_by_xpath(
     "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a").click()  # открытие подписчиков
 
-element = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[2]")  # прокручиваемый элемент
-# начальная прокрутка, плавная прокрутка
-browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight/%s" % 6, element)
-sleep(1)
-browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight/%s" % 4, element)
-sleep(1)
-browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight/%s" % 3, element)
-sleep(1)
-browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight/%s" % 2, element)
-sleep(1)
-browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight/%s" % 1.4, element)
-sleep(1)
+sleep(3)
 
-pers = []  # массив ссылок
-t = 0.7  # ожидание после каждой прокрутки
-num_scroll = 0  # количество совершённых прокруток
-p = 0  # коэффициент ожидания
 
-while len(pers) < full:
-    num_scroll += 1
-    browser.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight/%s", element)
+def new_scroll_element(e):
+    const = 30000
+    ht = 0
+    i = 0
+    while const >= ht:
+        sleep(0.5)
+        ht = browser.execute_script("""
+                        arguments[0].scrollTo(0, arguments[0].scrollHeight);
+                        return arguments[0].scrollHeight;
+                        """, e)
+        print(ht)
+        print(browser.find_elements_by_xpath('//a[@class="FPmhX notranslate  _0imsa "]')[i].get_attribute("href"))
+        sleep(0.5)
+        i += 1
 
-    if num_scroll % 10 == 0:
-        print("!")
-        #  сохранение пользователей
-        persons = browser.find_element_by_xpath(
-            "/html/body/div[5]/div/div/div[2]/ul/div/li[1]/div/div[1]/div[2]/div[1]/span/a")
-        for i in range(len(persons)):
-            pers.append(str(persons[i].get_attribute('href')))
-    sleep(t)
 
-    #  ожидание
-    if len(pers) > (2000 + 1000 * p):
-        print("\nОжидание 10 минут")
-        sleep(60 * 10)
-        p += 1
+def get_subscribes(elm, count):
+    result = []
 
-#  создание файла со списком пользователей
-f = open("list.txt", mode="w")
-for persons in pers:
-    f.write(persons)
-    f.write("\n")
-f.close()
+    while True:
+        sleep(0.5)
+        browser.execute_script("""arguments[0].scrollTo(0, arguments[0].scrollHeight);
+                                return arguments[0].scrollHeight; """, elm)
+        elms_users = browser.find_elements_by_xpath('//a[@class="FPmhX notranslate  _0imsa "]')
+        if len(elms_users) >= count:
+            break
 
-# Ввод емейл
-#  input_email = browser.find_element_by_name('username')
-#  sleep(1)
-#  sleep(1)
+    n = 0
+    for user in elms_users:
+        n += 1
+        if n <= count:
+            result.append(user.get_attribute("href"))
 
-# Ввод пароля
-#  input_email = browser.find_element_by_name('password')
-#  sleep(1)
-#  input_email.send_keys('glush200416')
-#  sleep(1)
+    return result
 
-#  browser.find_element_by_xpath("//div[1]/div[3]").click()
-# Нажатие кнопки входа
-#  submit = browser.find_element_by_name('post')
-#  submit.click()
-#  sleep(15)
+
+# Прокрутка подпишиков
+elm_subscribes = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[2]")
+# new_scroll_element(elm_subscribes)
+sleep(3)
+url_subscribes = get_subscribes(elm=elm_subscribes, count=200)
+
+# создание файла со списком пользователей
+with open("temp.txt", "w") as file:
+    n = 1
+    for i in url_subscribes:
+        file.write(str(n) + ". " + str(i) + "\n")
+        n += 1
