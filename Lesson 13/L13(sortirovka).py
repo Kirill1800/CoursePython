@@ -74,3 +74,11 @@ status = browser.find_element_by_xpath(element).text
 if int(status) < publications:
     print(j, "Мало публикаций")
     continue
+
+element = "/html/body/div[1]/section/main/div/header/div/div/span/img"
+if xpath_existence(element) == 0:
+    print(j, "Ошибка 4")
+    continue
+status = browser.find_element_by_xpath(element).get_attribute("src")
+if status.find("s150x150") == 1:
+    print()
