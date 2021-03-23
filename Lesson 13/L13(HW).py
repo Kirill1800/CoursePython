@@ -16,7 +16,6 @@ from selenium.common.exceptions import NoSuchElementException
 #  time += 0.5
 #  return False
 
-
 browser = webdriver.Chrome("/Users/lawr/PycharmProjects/CoursePythonKirill/Lesson 13/chrome_driver/chromedriver_mac64")
 # browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\Lesson 13\chrome_driver\chromedriver.exe")
 
