@@ -16,8 +16,8 @@ from selenium.common.exceptions import NoSuchElementException
 #  time += 0.5
 #  return False
 
-browser = webdriver.Chrome("/Users/lawr/PycharmProjects/CoursePythonKirill/Lesson 13/chrome_driver/chromedriver_mac64")
-# browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\Lesson 13\chrome_driver\chromedriver.exe")
+# browser = webdriver.Chrome("/Users/lawr/PycharmProjects/CoursePythonKirill/Lesson 13/chrome_driver/chromedriver_mac64")
+browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\Lesson 13\chrome_driver\chromedriver.exe")
 
 print(browser)
 
@@ -25,7 +25,8 @@ print(browser)
 browser.get("https://www.instagram.com/accounts/login/?source=reset_password")
 sleep(3)
 
-t = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
+t = browser.find_element_by_xpath(
+    "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
 t.send_keys("kirill.glushakov03@mail.ru")
 
 sleep(3)
@@ -42,6 +43,8 @@ browser.find_element_by_xpath(
     "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a").click()  # открытие подписчиков
 
 sleep(3)
+
+full = 100
 
 
 def new_scroll_element(e):
@@ -92,3 +95,5 @@ with open("temp.txt", "w") as file:
     for i in url_subscribes:
         file.write(str(n) + ". " + str(i) + "\n")
         n += 1
+
+browser.close()
