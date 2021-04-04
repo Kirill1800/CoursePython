@@ -132,7 +132,15 @@ for person in file_list:
     if status.find("s150x150") == -1:
         print("Нет аватарки")
 
-
     sleep(5)
     print()
 
+filter_list.append(person)
+print(j, "Пользователь добавлен")
+i += 1
+
+f = open("C:\\Users\\Admin\\Documents\\GitHub\\CoursePython\\Lesson 13\\filtered_persons_list.txt", "w")
+for line in filter_list:
+    f.write(line)
+f.close()
+print("\nДобавлено", i, "пользователей")
