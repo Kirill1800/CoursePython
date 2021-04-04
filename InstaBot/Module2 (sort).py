@@ -38,6 +38,10 @@ if get_os()[1] == "Windows":
 else:
     f = open("/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/url_users.txt", 'r')
 
+if get_os()[1] == "Windows":
+    path_source = r"C:\Users\Admin\Documents\GitHub\CoursePython\InstaBot\"
+else:
+    path_source = "/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/"
 
 file_list = []
 for line in f:
@@ -184,7 +188,7 @@ for person in file_list:
                     if chek_photo():
 
                         print(5555555555555555555555555555555555555)
-                        with open("/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/sort_users.txt", "w") as file:
+                        with open(path_source + "sort_users.txt", "w") as file:
                             file.write(person)
 
     print()
