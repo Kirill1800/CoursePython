@@ -44,7 +44,7 @@ for line in f:
     file_list.append(line)
 f.close()
 
-file_list = ["1. https://www.instagram.com/fiydarigno/", "3. https://www.instagram.com/rosa_chot1/", "2. https://www.instagram.com/spencerspacex/"]
+# file_list = ["1. https://www.instagram.com/fiydarigno/", "3. https://www.instagram.com/rosa_chot1/"]
 
 
 #  ------------------- ОБРАБОТКА ССЫЛОК -------------------
@@ -72,24 +72,28 @@ def check_count_subscriptions(count):
         elm = '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/span/span'  # Для закрытых
         s = browser.find_element_by_xpath(elm).text
 
-    if int(s.replace(" ", "")) > count:
+    s = s.replace(" ", "")
+    s = s.replace("тыс.", "000")
+    if count[0] < int(s) < count[1]:
         return True
     else:
         return False
 
 
 #  3) у аккаунта не может быть больше подписчиков, чем указано
-# Проверка на колличество подписок (True - если больше count, иначе False)
+# Проверка на колличество Подпищиков (True - если больше count, иначе False)
 def check_count_subscribers(count):
 
     try:
         elm = "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span"  # Для открытых
         s = browser.find_element_by_xpath(elm).text
     except NoSuchElementException:
-        elm = '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/span/span'  # Для закрытых
+        elm = '//*[@id="react-root"]/section/main/div/header/section/ul/li[2]/span/span'  # Для закрытых
         s = browser.find_element_by_xpath(elm).text
 
-    if int(s.replace(" ", "")) > int(count):
+    s = s.replace(" ", "")
+    s = s.replace("тыс.", "000")
+    if count[0] < int(s) < count[1]:
         return True
     else:
         return False
@@ -98,8 +102,13 @@ def check_count_subscribers(count):
 #  3) не должно быть ссылки на сайт
 #  4) необходимо фото пролфиля
 def chek_photo():
-    elm = '//*[@id="react-root"]/section/main/div/header/div/div/span/img'
-    s = browser.find_element_by_xpath(elm).get_attribute("src")
+
+    try:
+        elm = '//*[@id="react-root"]/section/main/div/header/div/div/span/img'  # Для открытых
+        s = browser.find_element_by_xpath(elm).get_attribute("src")
+    except NoSuchElementException:
+        elm = '//*[@id="react-root"]/section/main/div/header/div/div/div/button/img'  # Для закрытых
+        s = browser.find_element_by_xpath(elm).get_attribute("src")
 
     if s.find("s150x150") == -1:
         if s.find("s320x320") == -1:
@@ -108,8 +117,6 @@ def chek_photo():
             return True
     else:
         return True
-
-
 
 
 #  5) не менее 5 публикаций
@@ -124,24 +131,27 @@ def check_count_publications(count):
         return False
 
 
-#  6) посленяя публикация не менее days дней назад
-
-
 filter_list = []
 i = 0  # подходят
 j = 0  # на выходе
 
-# Константы
-days = 20
-acc_subsckriptions = 200
-publications = 10
+# ----- КОНСТАНТЫ -----
+acc_subscriptions = [50, 450]  # Подписки
+acc_subscribers = [70, 900]  # Подпищики
+publications = 4
 
-# Запустим страницу
-browser.get("https://www.instagram.com/accounts/login/?source=reset_password")
-sleep(3)
 
-t = browser.find_element_by_xpath(
-    "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
+# Проверка на правильность страницы входа (открываем о тех пор пока не гуд)
+while True:
+    try:
+        browser.find_element_by_xpath("/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
+        break
+    except NoSuchElementException:
+        browser.get("https://www.instagram.com/accounts/login/?source=reset_password")
+        sleep(3)
+
+
+t = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
 t.send_keys("kirill.glushakov03@mail.ru")
 
 sleep(3)
@@ -156,18 +166,26 @@ for person in file_list:
     j += 1
     print(person.replace("\n", ""))
     browser.get(person)
-
-    # Проверка
-    print("Приватный? ", check_private())
-    sleep(4)
-    print("Больше подписок?", check_count_subscriptions(count=acc_subsckriptions))
-    sleep(3)
-    print("Больше подписчиков?", check_count_subscribers(count=acc_subsckriptions))
-    sleep(3)
-    print("Больше публикаций?", check_count_publications(count=publications))
-    print("Есть аватарка?", chek_photo())
-
-
     sleep(5)
+
+    flag = False
+    # Проверка
+    if flag:
+        print("Приватный? - ", check_private())
+        print("Подписок больше {}? - ".format(acc_subscriptions), check_count_subscriptions(count=acc_subscriptions))
+        print("Подписчиков больше {}? - ".format(acc_subscribers), check_count_subscribers(count=acc_subscribers))
+        print("Публикаций больше {}? - ".format(publications), check_count_publications(count=publications))
+        print("Есть аватарка? - ", chek_photo())
+
+    if not check_private():
+        if check_count_subscriptions(count=acc_subscriptions):
+            if check_count_subscribers(count=acc_subscribers):
+                if check_count_publications(count=publications):
+                    if chek_photo():
+
+                        print(5555555555555555555555555555555555555)
+                        with open("/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/sort_users.txt", "w") as file:
+                            file.write(person)
+
     print()
 
