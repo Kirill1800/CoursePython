@@ -25,7 +25,7 @@ def check_full_page(_xpath):
 
 
 # Создали браузер
-browser = webdriver.Chrome("/Users/lawr/PycharmProjects/CoursePythonKirill/Lesson 13/chrome_driver/chromedriver_mac64")
+browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\Lesson 13\chrome_driver\chromedriver.exe")
 
 print(browser)
 
@@ -42,7 +42,7 @@ sleep(1)
 # Ввод пароля
 input_email = browser.find_element_by_name('password')
 sleep(1)
-input_email.send_keys('badoopython03')
+input_email.send_keys('badoopython')
 sleep(1)
 
 # Нажатие кнопки входа
@@ -70,5 +70,4 @@ if check_full_page('//div[@data-choice="yes"]'):
                 print(datetime.now(), "Нажали на пропуск")
 
 # browser.quit()
-
 
