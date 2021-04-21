@@ -31,7 +31,8 @@ def get_os():
 if get_os()[1] == "Windows":
     browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\InstaBot\chrome_driver\chromedriver.exe")
 else:
-    browser = webdriver.Chrome("/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/chrome_driver/chromedriver_mac64")
+    browser = webdriver.Chrome(
+        "/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/chrome_driver/chromedriver_mac64")
 
 if get_os()[1] == "Windows":
     f = open("C:\\Users\\Admin\\Documents\\GitHub\\CoursePython\\InstaBot\\url_users.txt", 'r')
@@ -39,7 +40,7 @@ else:
     f = open("/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/url_users.txt", 'r')
 
 if get_os()[1] == "Windows":
-    path_source = r"C:\Users\Admin\Documents\GitHub\CoursePython\InstaBot\"
+    path_source = "C:\\Users\\Admin\\Documents\\GitHub\\CoursePython\\InstaBot\\"
 else:
     path_source = "/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/"
 
@@ -47,6 +48,7 @@ file_list = []
 for line in f:
     file_list.append(line)
 f.close()
+
 
 # file_list = ["1. https://www.instagram.com/fiydarigno/", "3. https://www.instagram.com/rosa_chot1/"]
 
@@ -68,7 +70,6 @@ def check_private():
 #  2) у аккаунта не может быть больше подписчиков, чем указано
 # Проверка на колличество подписок (True - если больше count, иначе False)
 def check_count_subscriptions(count):
-
     try:
         elm = "/html/body/div[1]/section/main/div/header/section/ul/li[3]/a/span"  # Для открытых
         s = browser.find_element_by_xpath(elm).text
@@ -87,7 +88,6 @@ def check_count_subscriptions(count):
 #  3) у аккаунта не может быть больше подписчиков, чем указано
 # Проверка на колличество Подпищиков (True - если больше count, иначе False)
 def check_count_subscribers(count):
-
     try:
         elm = "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a/span"  # Для открытых
         s = browser.find_element_by_xpath(elm).text
@@ -106,7 +106,6 @@ def check_count_subscribers(count):
 #  3) не должно быть ссылки на сайт
 #  4) необходимо фото пролфиля
 def chek_photo():
-
     try:
         elm = '//*[@id="react-root"]/section/main/div/header/div/div/span/img'  # Для открытых
         s = browser.find_element_by_xpath(elm).get_attribute("src")
@@ -144,18 +143,18 @@ acc_subscriptions = [50, 450]  # Подписки
 acc_subscribers = [70, 900]  # Подпищики
 publications = 4
 
-
 # Проверка на правильность страницы входа (открываем о тех пор пока не гуд)
 while True:
     try:
-        browser.find_element_by_xpath("/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
+        browser.find_element_by_xpath(
+            "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
         break
     except NoSuchElementException:
         browser.get("https://www.instagram.com/accounts/login/?source=reset_password")
         sleep(3)
 
-
-t = browser.find_element_by_xpath("/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
+t = browser.find_element_by_xpath(
+    "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
 t.send_keys("kirill.glushakov03@mail.ru")
 
 sleep(3)

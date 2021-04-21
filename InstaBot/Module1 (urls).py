@@ -16,8 +16,8 @@ from selenium.common.exceptions import NoSuchElementException
 #  time += 0.5
 #  return False
 
-browser = webdriver.Chrome("/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/chrome_driver/chromedriver_mac64")
-# browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\InstaBot\chrome_driver\chromedriver.exe")
+#  browser = webdriver.Chrome("/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/chrome_driver/chromedriver_mac64")
+browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\InstaBot\chrome_driver\chromedriver.exe")
 
 print(browser)
 
@@ -90,7 +90,7 @@ sleep(3)
 url_subscribes = get_subscribes(elm=elm_subscribes, count=200)
 
 # создание файла со списком пользователей
-with open("/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/url_users.txt", "w") as file:
+with open("C:\\Users\\Admin\\Documents\\GitHub\\CoursePython\\InstaBot\\url_users.txt", "w") as file:
     n = 1
     for i in url_subscribes:
         file.write(str(n) + ". " + str(i) + "\n")
