@@ -90,7 +90,7 @@ sleep(3)
 url_subscribes = get_subscribes(elm=elm_subscribes, count=200)
 
 # создание файла со списком пользователей
-with open("C:\\Users\\Admin\\Documents\\GitHub\\CoursePython\\InstaBot\\url_users.txt", "w") as file:
+with open("/InstaBot/url_users.txt", "w") as file:
     n = 1
     for i in url_subscribes:
         file.write(str(n) + ". " + str(i) + "\n")
