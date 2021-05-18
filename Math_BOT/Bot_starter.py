@@ -58,7 +58,6 @@ for i in URL_SITE_6:
 
     print(title, url_video, url_forms)
 
-
 # # Запустим страницу
 # browser.get(URL_SITE)
 # sleep(3)
