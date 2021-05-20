@@ -61,7 +61,7 @@ class BotGetUpdates:
             return None
 
     # ОТПРАВЛЯТЬ Сообщения
-    def send_message(self, chat_id, text):
+    def send_message(self, chat_id, text, mode=None):
         import requests
         if self.FLAG_SEND:  # Если текст еще не был отправлен
             global response_send
@@ -69,7 +69,8 @@ class BotGetUpdates:
             # self.MESSAGE_SENT = {'chat_id': chat_id, 'text': text}
             # response_send = requests.post(self.URL + 'sendmessage', json=self.MESSAGE_SENT)
             # 2 ВАРИАНТ - GET (Проблем нет)
-            response_send = requests.get(self.URL + 'sendmessage?chat_id={}&text={}'.format(chat_id, text))
+            string = 'sendmessage?chat_id={}&text={}&parse_mode={}'
+            response_send = requests.get(self.URL + string.format(chat_id, text, mode))
             return self.MESSAGE_SENT
         else:
             pass
