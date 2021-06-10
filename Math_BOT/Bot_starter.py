@@ -93,8 +93,6 @@ else:  # Если записаных данных нет
 token = "1624243252:AAFQo5YHwdK7O2akLKZB-KyqOdTBfvBV6Zw"
 requests.get(url="https://api.telegram.org/bot{}/setWebhook?url=".format(token))
 bot = telebot.TeleBot(token=token)
-print(bot)
-bot.send_message(221824550, "Перезапуск!")
 
 
 # Главный обработчик (User)
@@ -106,51 +104,24 @@ def commands(message):
             text += "  " + i['title'] + "\n"
         text += "\n*ВЫБЕРИТЕ НОМЕР ТЕМЫ ЗАНЯТИЯ*"
         bot.send_message(chat_id=message.chat.id, text=text, parse_mode="Markdown")
-
-
-bot.polling()
-
-sleep(9999)
-
-bot = BotGetUpdates(token="1624243252:AAFQo5YHwdK7O2akLKZB-KyqOdTBfvBV6Zw")
-print("Бот запущен!")
-while True:
-    bot.update_json()
-    bot.get_message(-1)
-    print(bot.MESSAGE_INCOMING)  # Будет отображатся последнее сообщение в телеге
-
-    if (bot.MESSAGE_INCOMING['text'] == "Привет") or (bot.MESSAGE_INCOMING['text'] == "/start") or (
-            bot.MESSAGE_INCOMING['text'] == "привет"):
-        chat_id = bot.MESSAGE_INCOMING["chat_id"]
-        text = "*СПИСОК ТЕМ:*\n\n"
-
-        for i in DATA_6:
-            text += "  " + i['title'] + "\n"
-        text += "\n*ВЫБЕРИТЕ НОМЕР ТЕМЫ ЗАНЯТИЯ*"
-
-        bot.send_message(chat_id=chat_id, text=text, mode="Markdown")
-
-    elif check_num_title(text_bot=bot.MESSAGE_INCOMING['text'], data=DATA_6):
-        chat_id = bot.MESSAGE_INCOMING["chat_id"]
-        lesson = get_lesson(text_bot=bot.MESSAGE_INCOMING['text'], data=DATA_6)
-
+    elif check_num_title(text_bot=message.text, data=DATA_6):
+        lesson = get_lesson(text_bot=message.text, data=DATA_6)
         text = "*ВЫ ВЫБРАЛИ ТЕМУ:*\n\n"
         text += lesson["title"] + "\n\n"
         text += "Просмотрите видео на эту тему: "
         text += "[{}]({})\n".format("Видео", lesson['url_video'])
-        command = "/check{}".format(bot.MESSAGE_INCOMING['text'])
+        command = "/check{}".format(message.text)
         text += "После проверь себя нажав: {}".format(command)
-        bot.send_message(chat_id=chat_id, text=text, mode="Markdown")
-    elif bot.MESSAGE_INCOMING["text"][:6] == "/check":
-        chat_id = bot.MESSAGE_INCOMING["chat_id"]
-        lesson = get_lesson(text_bot=bot.MESSAGE_INCOMING["text"][6:], data=DATA_6)
-
+        bot.send_message(chat_id=message.chat.id, text=text, parse_mode="Markdown")
+    elif message.text[:6] == "/check":
+        lesson = get_lesson(text_bot=message.text[6:], data=DATA_6)
         text = "*ПРОВЕРЬ СЕБЯ:*\n\n"
         text += "[{}]({})".format("Форма для проверки", lesson['url_forms'])
-        bot.send_message(chat_id=chat_id, text=text, mode="Markdown")
-
+        bot.send_message(chat_id=message.chat.id, text=text, parse_mode="Markdown")
     else:
-        chat_id = bot.MESSAGE_INCOMING["chat_id"]
         text = "*ТАКОЙ ТЕМЫ НЕ СУЩЕСТВУЕТ*\n\n"
         text += "Для получения списка тем, нажмите /start"
-        bot.send_message(chat_id=chat_id, text=text, mode="Markdown")
+        bot.send_message(chat_id=message.chat.id, text=text, parse_mode="Markdown")
+
+
+bot.polling()
