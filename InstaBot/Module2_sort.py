@@ -85,6 +85,7 @@ def check_count_subscribers(count):
 
     s = s.replace(" ", "")
     s = s.replace("тыс.", "000")
+    s = s.replace(",", "")
     if count[0] < int(s) < count[1]:
         return True
     else:
