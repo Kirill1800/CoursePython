@@ -22,12 +22,12 @@ def get_os():
     if path[0] == "/":
         if path[2] != "\\":
             return "/", "Unix"
-    # Windows
+    # Windows 5
     if path[0] != "/":
         if path[2] == "\\":
             return "\\", "Windows"
 
-гарао
+
 if get_os()[1] == "Windows":
     browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\InstaBot\chrome_driver\chromedriver.exe")
 else:
