@@ -2,7 +2,7 @@ from selenium import webdriver
 from time import sleep
 from selenium.common.exceptions import ElementClickInterceptedException
 from selenium.common.exceptions import NoSuchElementException
-from InstaBot.path import path_users
+from InstaBot.path import path_users, path_web_driver
 from InstaBot.functions import login_inst
 
 #  def check_full_page(_xpath):
@@ -18,14 +18,11 @@ from InstaBot.functions import login_inst
 #  time += 0.5
 #  return False
 
-#  browser = webdriver.Chrome("/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/chrome_driver/chromedriver_mac64")
-browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\InstaBot\chrome_driver\chromedriver.exe")
+browser = webdriver.Chrome(path_web_driver)
 
 print(browser)
 
 login_inst(browser=browser)
-
-
 
 browser.find_element_by_xpath(
     "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a").click()  # открытие подписчиков

@@ -18,10 +18,10 @@ def get_os():
 # Main (Формируем основные пути к файлам)
 if get_os()[1] == "Windows":
     path_source = "C:\\Users\\Admin\\Documents\\GitHub\\CoursePython\\InstaBot\\"
-    path_webdriver = path_source + "chrome_driver\chromedriver.exe"
+    path_web_driver = path_source + "chrome_driver\chromedriver.exe"
 else:
-    path_source = "/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/"
-    path_webdriver = path_source + "chrome_driver/chromedriver_mac64"
+    path_source = "/Users/kirillglusakov/Documents/GitHub/CoursePython/InstaBot/"
+    path_web_driver = path_source + "chrome_driver/chromedriver"
 
 path_users = path_source + "users_url.txt"
 path_sort = path_source + "users_sort.txt"

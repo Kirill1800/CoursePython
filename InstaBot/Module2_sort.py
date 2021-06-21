@@ -2,8 +2,9 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium import webdriver
 from time import sleep
+from InstaBot.path import path_users, path_web_driver, path_sort
+from InstaBot.functions import check_good_page
 import os
-
 
 def xpath_existence(url):
     try:
@@ -28,22 +29,9 @@ def get_os():
             return "\\", "Windows"
 
 
-if get_os()[1] == "Windows":
-    browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\InstaBot\chrome_driver\chromedriver.exe")
-else:
-    browser = webdriver.Chrome(
-        "/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/chrome_driver/chromedriver_mac64")
+browser = webdriver.Chrome(path_web_driver)
 
-if get_os()[1] == "Windows":
-    f = open("C:\\Users\\Admin\\Documents\\GitHub\\CoursePython\\InstaBot\\url_users.txt", 'r')
-else:
-    f = open("/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/url_users.txt", 'r')
-
-if get_os()[1] == "Windows":
-    path_source = "C:\\Users\\Admin\\Documents\\GitHub\\CoursePython\\InstaBot\\"
-else:
-    path_source = "/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/"
-
+f = open(path_users, 'r')
 file_list = []
 for line in f:
     file_list.append(line)
@@ -139,9 +127,9 @@ i = 0  # подходят
 j = 0  # на выходе
 
 # ----- КОНСТАНТЫ -----
-acc_subscriptions = [50, 450]  # Подписки
-acc_subscribers = [70, 900]  # Подпищики
-publications = 4
+acc_subscriptions = [10, 450]  # Подписки
+acc_subscribers = [10, 900]  # Подпищики
+publications = 1
 
 # Проверка на правильность страницы входа (открываем о тех пор пока не гуд)
 while True:
@@ -169,26 +157,30 @@ for person in file_list:
     j += 1
     print(person.replace("\n", ""))
     browser.get(person)
-    sleep(5)
+    sleep(1.5)
 
-    flag = False
-    # Проверка
-    if flag:
-        print("Приватный? - ", check_private())
-        print("Подписок больше {}? - ".format(acc_subscriptions), check_count_subscriptions(count=acc_subscriptions))
-        print("Подписчиков больше {}? - ".format(acc_subscribers), check_count_subscribers(count=acc_subscribers))
-        print("Публикаций больше {}? - ".format(publications), check_count_publications(count=publications))
-        print("Есть аватарка? - ", chek_photo())
+    if check_good_page(browser=browser):
+        flag = False
+        # Проверка
+        if flag:
+            print("Приватный? - ", check_private())
+            print("Подписок больше {}? - ".format(acc_subscriptions), check_count_subscriptions(count=acc_subscriptions))
+            print("Подписчиков больше {}? - ".format(acc_subscribers), check_count_subscribers(count=acc_subscribers))
+            print("Публикаций больше {}? - ".format(publications), check_count_publications(count=publications))
+            print("Есть аватарка? - ", chek_photo())
 
-    if not check_private():
-        if check_count_subscriptions(count=acc_subscriptions):
-            if check_count_subscribers(count=acc_subscribers):
-                if check_count_publications(count=publications):
-                    if chek_photo():
+        if not check_private():
+            if check_count_subscriptions(count=acc_subscriptions):
+                if check_count_subscribers(count=acc_subscribers):
+                    if check_count_publications(count=publications):
+                        if chek_photo():
 
-                        print(5555555555555555555555555555555555555)
-                        with open(path_source + "sort_users.txt", "w") as file:
-                            file.write(person)
+                            print("Человек подходит!")
+                            with open(path_sort, "a") as file:
+                                file.write(person)
 
-    print()
+        print()
+    else:
+        print("Страница с ошибкой!")
+        print()
 

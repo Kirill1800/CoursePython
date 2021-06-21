@@ -2,6 +2,16 @@ from time import sleep
 from selenium.common.exceptions import NoSuchElementException
 
 
+# Проверка на хорошая (true) ли страница или плохая (false)
+def check_good_page(browser):
+    try:
+        elm = "/html/body/div[1]/section/main/div/header/section/ul/li[1]/span/span"
+        browser.find_element_by_xpath(elm)
+        return True
+    except NoSuchElementException:
+        return False
+
+
 def login_inst(browser, username="kirill.glushakov03@mail.ru", password="instapython"):
     # Запустим страницу
 
@@ -27,29 +37,28 @@ def login_inst(browser, username="kirill.glushakov03@mail.ru", password="instapy
         "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[3]").click()
     sleep(3)
     # Открытие стандартной страницы
-    browser.get("https://www.instagram.com/natgeo/")
+    browser.get("https://www.instagram.com/slutskgorod/")
     sleep(3)
 
 
 # Обработка ошибок запроса к сайту, если ошибок нет - True иначе - False
 def exception(browser):
-
     # Ошибка 560
-    #try:
+    # try:
     #    elm = "/html/body/div[1]/div[1]/div[2]/div[1]/div/div/div/div[2]"  # Ошибка 560
     #    s = browser.find_element_by_xpath(elm).text
     #    print(s)
     #    return False
-    #except:
+    # except:
     #    pass
 
     # К сожалению, эта страница недоступна.
-    #try:
+    # try:
     #    elm = '//*[@id="react-root"]/section/main/div/h2'
     #    s = browser.find_element_by_xpath(elm).text
     #    print(s)
     #    return False
-    #except:
+    # except:
     #    pass
 
     # Универсально (Поиск надписи подпищиков)
