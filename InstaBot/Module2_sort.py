@@ -3,8 +3,6 @@ from selenium.common.exceptions import StaleElementReferenceException
 from selenium import webdriver
 from time import sleep
 import os
-from InstaBot.path import path_users, path_webdriver, path_sort
-from InstaBot.functions import login_inst, exception
 
 
 def xpath_existence(url):
@@ -16,8 +14,35 @@ def xpath_existence(url):
     return existence
 
 
-browser = webdriver.Chrome(path_webdriver)
-f = open(path_users, 'r')
+# Возвращает "Unix" или "Windows" и Разделитель(separator)
+def get_os():
+    # Примеры разных путей: 'C:\\Users\\Administrator\\__file__' or '/Users/lawr/PycharmProjects/FrxBot/__file__'
+    path = os.path.realpath('__file__')
+    # Linux / MacOS
+    if path[0] == "/":
+        if path[2] != "\\":
+            return "/", "Unix"
+    # Windows
+    if path[0] != "/":
+        if path[2] == "\\":
+            return "\\", "Windows"
+
+
+if get_os()[1] == "Windows":
+    browser = webdriver.Chrome(r"C:\Users\Admin\Documents\GitHub\CoursePython\InstaBot\chrome_driver\chromedriver.exe")
+else:
+    browser = webdriver.Chrome(
+        "/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/chrome_driver/chromedriver_mac64")
+
+if get_os()[1] == "Windows":
+    f = open("C:\\Users\\Admin\\Documents\\GitHub\\CoursePython\\InstaBot\\url_users.txt", 'r')
+else:
+    f = open("/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/url_users.txt", 'r')
+
+if get_os()[1] == "Windows":
+    path_source = "C:\\Users\\Admin\\Documents\\GitHub\\CoursePython\\InstaBot\\"
+else:
+    path_source = "/Users/lawr/PycharmProjects/CoursePythonKirill/InstaBot/"
 
 file_list = []
 for line in f:
@@ -114,44 +139,56 @@ i = 0  # подходят
 j = 0  # на выходе
 
 # ----- КОНСТАНТЫ -----
-acc_subscriptions = [10, 450]  # Подписки
-acc_subscribers = [10, 900]  # Подпищики
-publications = 1
+acc_subscriptions = [50, 450]  # Подписки
+acc_subscribers = [70, 900]  # Подпищики
+publications = 4
 
-login_inst(browser=browser)
+# Проверка на правильность страницы входа (открываем о тех пор пока не гуд)
+while True:
+    try:
+        browser.find_element_by_xpath(
+            "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
+        break
+    except NoSuchElementException:
+        browser.get("https://www.instagram.com/accounts/login/?source=reset_password")
+        sleep(3)
 
-os.remove(path_sort)
+t = browser.find_element_by_xpath(
+    "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[1]/div/label/input")
+t.send_keys("kirill.glushakov03@mail.ru")
+
+sleep(3)
+browser.find_element_by_xpath(
+    "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[2]/div/label/input").send_keys("instapython")
+browser.find_element_by_xpath(
+    "/html/body/div[1]/section/main/div/div/div[1]/div/form/div[1]/div[3]").click()
+sleep(3)
 
 for person in file_list:
     person = person.split(". ")[1]
     j += 1
     print(person.replace("\n", ""))
-
     browser.get(person)
-    res_except = exception(browser=browser)
+    sleep(5)
 
-    if res_except:
-        sleep(5)
-        flag = False
-        # Проверка
-        if flag:
-            print("Приватный? - ", check_private())
-            print("Подписок больше {}? - ".format(acc_subscriptions),
-                  check_count_subscriptions(count=acc_subscriptions))
-            print("Подписчиков больше {}? - ".format(acc_subscribers), check_count_subscribers(count=acc_subscribers))
-            print("Публикаций больше {}? - ".format(publications), check_count_publications(count=publications))
-            print("Есть аватарка? - ", chek_photo())
+    flag = False
+    # Проверка
+    if flag:
+        print("Приватный? - ", check_private())
+        print("Подписок больше {}? - ".format(acc_subscriptions), check_count_subscriptions(count=acc_subscriptions))
+        print("Подписчиков больше {}? - ".format(acc_subscribers), check_count_subscribers(count=acc_subscribers))
+        print("Публикаций больше {}? - ".format(publications), check_count_publications(count=publications))
+        print("Есть аватарка? - ", chek_photo())
 
-        if not check_private():
-            if check_count_subscriptions(count=acc_subscriptions):
-                if check_count_subscribers(count=acc_subscribers):
-                    if check_count_publications(count=publications):
-                        if chek_photo():
-                            print("Аккаунт подходит!")
-                            with open(path_sort, "a") as file:
-                                file.write(person)
+    if not check_private():
+        if check_count_subscriptions(count=acc_subscriptions):
+            if check_count_subscribers(count=acc_subscribers):
+                if check_count_publications(count=publications):
+                    if chek_photo():
 
-        print()
-    else:
-        print("Ошибка. Пропуск человека!")
-        print()
+                        print(5555555555555555555555555555555555555)
+                        with open(path_source + "sort_users.txt", "w") as file:
+                            file.write(person)
+
+    print()
+
