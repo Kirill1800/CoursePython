@@ -22,7 +22,7 @@ def get_os():
     if path[0] == "/":
         if path[2] != "\\":
             return "/", "Unix"
-    # Windows
+    # Windows 5
     if path[0] != "/":
         if path[2] == "\\":
             return "\\", "Windows"
