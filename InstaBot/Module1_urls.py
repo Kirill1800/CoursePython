@@ -1,61 +1,29 @@
 from selenium import webdriver
 from time import sleep
-from selenium.common.exceptions import ElementClickInterceptedException
-from selenium.common.exceptions import NoSuchElementException
 from InstaBot.path import path_users, path_web_driver
-from InstaBot.functions import login_inst
-
-#  def check_full_page(_xpath):
-#  time = 0
-#  while time <= 60:
-#  try:
-#  browser.find_element_by_xpath(xpath=_xpath)
-#  return True
-#  except ElementClickInterceptedException:
-#  sleep(0.5)
-#  except NoSuchElementException:
-#  sleep(0.5)
-#  time += 0.5
-#  return False
-
-browser = webdriver.Chrome(path_web_driver)
-
-print(browser)
-
-login_inst(browser=browser)
-
-browser.find_element_by_xpath(
-    "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a").click()  # открытие подписчиков
-
-sleep(3)
-
-full = 100
+from InstaBot.functions import login_inst, smart_sleep
 
 
-def new_scroll_element(e):
-    const = 30000
-    ht = 0
-    i = 0
-    while const >= ht:
-        sleep(0.5)
-        ht = browser.execute_script("""
-                        arguments[0].scrollTo(0, arguments[0].scrollHeight);
-                        return arguments[0].scrollHeight;
-                        """, e)
-        print(ht)
-        print(browser.find_elements_by_xpath('//a[@class="FPmhX notranslate  _0imsa "]')[i].get_attribute("href"))
-        sleep(0.5)
-        i += 1
+# открытие подпищиков
+def open_subscribers(b):
+    xpath = "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a"
+    smart_sleep(browser=b, xpath=xpath)
+    b.find_element_by_xpath(xpath).click()  # открытие подписчиков
+    print("Открыли подпищиков")
 
 
-def get_subscribes(elm, count):
+# получение подпищиков (вместе с прокруткой)
+def get_subscribes(b, count):
     result = []
+
+    elm = b.find_element_by_xpath("/html/body/div[5]/div/div/div[2]")
+    sleep(3)
 
     while True:
         sleep(0.5)
-        browser.execute_script("""arguments[0].scrollTo(0, arguments[0].scrollHeight);
+        b.execute_script("""arguments[0].scrollTo(0, arguments[0].scrollHeight);
                                 return arguments[0].scrollHeight; """, elm)
-        elms_users = browser.find_elements_by_xpath('//a[@class="FPmhX notranslate  _0imsa "]')
+        elms_users = b.find_elements_by_xpath('//a[@class="FPmhX notranslate  _0imsa "]')
         if len(elms_users) >= count:
             break
 
@@ -68,19 +36,17 @@ def get_subscribes(elm, count):
     return result
 
 
-# Прокрутка подпишиков
-elm_subscribes = browser.find_element_by_xpath("/html/body/div[5]/div/div/div[2]")
-# new_scroll_element(elm_subscribes)
-sleep(3)
-url_subscribes = get_subscribes(elm=elm_subscribes, count=200)
-
-# создание файла со списком пользователей
-with open(path_users, "w") as file:
-    n = 1
-    for i in url_subscribes:
-        file.write(str(n) + ". " + str(i) + "\n")
-        n += 1
-
-print("Записаны пользователи")
-
-browser.close()
+# ГЛАВНЫЙ ЗАПУСК МОДУЛЯ 1
+def main():
+    browser = webdriver.Chrome(path_web_driver)
+    login_inst(browser=browser)
+    open_subscribers(b=browser)
+    url_subscribes = get_subscribes(b=browser, count=200)  # Получение и Прокрутка подпишиков
+    # создание файла со списком пользователей
+    with open(path_users, "w") as file:
+        n = 1
+        for i in url_subscribes:
+            file.write(str(n) + ". " + str(i) + "\n")
+            n += 1
+    print("Записаны пользователи")
+    browser.close()

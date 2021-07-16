@@ -1,5 +1,6 @@
 from time import sleep
 from selenium.common.exceptions import NoSuchElementException
+from datetime import datetime, timedelta
 
 
 # Проверка на хорошая (true) ли страница или плохая (false)
@@ -64,7 +65,27 @@ def exception(browser):
     # Универсально (Поиск надписи подпищиков)
     try:
         elm = "/html/body/div[1]/section/main/div/header/section/ul/li[1]/span/span"
-        browser.find_element_by_xpath(elm).text
+        browser.find_element_by_xpath(elm)
         return True
     except NoSuchElementException:
+        return False
+
+
+# Функция которая ищет 60 секунд элемент и если не находит False, если находит True
+def smart_sleep(browser, xpath=None, strict_pause=None):
+    if strict_pause is not None:
+        sleep(strict_pause)
+        return True
+    else:
+        capture_inst_xpath = '//*[@id="react-root"]/section/nav/div[2]/div/div/div[1]/a/div/div/img'
+        start_time = datetime.now()
+        while (datetime.now() - start_time) < timedelta(minutes=1):
+            try:
+                browser.find_element_by_xpath(xpath=capture_inst_xpath)
+                if xpath is not None:
+                    browser.find_element_by_xpath(xpath=xpath)
+                print("  smart_sleep {}".format(datetime.now() - start_time))
+                return True
+            except NoSuchElementException:
+                sleep(0.0001)
         return False
