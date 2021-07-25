@@ -1,5 +1,5 @@
 .idea
 venv
-/InstaBot/subscriptions.txt
+/InstaBot/users_sub.txt
 /InstaBot/users_sort.txt
 /InstaBot/users_url.txt

@@ -1,6 +1,6 @@
 from selenium import webdriver
 from time import sleep
-from InstaBot.path import path_users, path_web_driver
+from InstaBot.path import path_web_driver, path_users
 from InstaBot.functions import login_inst, smart_sleep
 
 
@@ -9,14 +9,14 @@ def open_subscribers(b):
     xpath = "/html/body/div[1]/section/main/div/header/section/ul/li[2]/a"
     smart_sleep(browser=b, xpath=xpath)
     b.find_element_by_xpath(xpath).click()  # открытие подписчиков
-    print("Открыли подпищиков")
 
 
 # получение подпищиков (вместе с прокруткой)
 def get_subscribes(b, count):
     result = []
-
-    elm = b.find_element_by_xpath("/html/body/div[5]/div/div/div[2]")
+    xpath = "/html/body/div[5]/div/div/div[2]"
+    smart_sleep(browser=b, xpath=xpath)
+    elm = b.find_element_by_xpath(xpath=xpath)
     sleep(3)
 
     while True:
@@ -37,7 +37,7 @@ def get_subscribes(b, count):
 
 
 # ГЛАВНЫЙ ЗАПУСК МОДУЛЯ 1
-def main():
+def module1():
     browser = webdriver.Chrome(path_web_driver)
     login_inst(browser=browser)
     open_subscribers(b=browser)

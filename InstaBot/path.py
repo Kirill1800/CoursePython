@@ -25,4 +25,5 @@ else:
 
 path_users = path_source + "users_url.txt"
 path_sort = path_source + "users_sort.txt"
-path_subscriptions = path_source + "subscriptions.txt"
+path_subscriptions = path_source + "users_sub.txt"
+path_top = path_source + "users_top.json"

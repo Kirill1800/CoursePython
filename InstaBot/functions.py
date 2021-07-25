@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 def check_good_page(browser):
     try:
         elm = "/html/body/div[1]/section/main/div/header/section/ul/li[1]/span/span"
+        smart_sleep(browser=browser, xpath=elm)
         browser.find_element_by_xpath(elm)
         return True
     except NoSuchElementException:
@@ -89,3 +90,79 @@ def smart_sleep(browser, xpath=None, strict_pause=None):
             except NoSuchElementException:
                 sleep(0.0001)
         return False
+
+
+# Открытие файла и добавление всех строчек файла в LIST и вернуть LIST
+def open_file_to_list(path):
+    f = open(path, 'r')
+    file_list = []
+    for line in f:
+        file_list.append(line)
+    f.close()
+    return file_list
+
+
+def text_to_list(lst, count):
+    txt = ""
+    count = 0
+    for line in lst:
+        if count < 10:
+            txt += line
+        count += 1
+    return txt
+
+
+#  проверка подписаны мы на человека или нет
+def check_users(b):
+    xpath_yes_subscribe = '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div[2]/button/div/span'
+    try:
+        result = "Мы подписаны"
+        b.find_element_by_xpath(xpath_yes_subscribe)
+        print("  " + result)
+        return result
+    except NoSuchElementException:
+        result = "Мы не подписаны"
+        print("  " + result)
+        return result
+
+
+# Поиск элемента по "xpath" или "name" (в случае ошибки напечатает "text" если он указан)
+def find_element(b, text=None, xpath=None, name=None, delay=True):
+
+    def recursion():
+        sleep(0.1)
+        try:
+            if datetime.now() - time > timedelta(seconds=4):
+                return None
+            else:
+                if name is not None:
+                    answer = b.find_element_by_name(name)
+                    return answer
+                if xpath is not None:
+                    answer = b.find_element_by_xpath(xpath)
+                    return answer
+        except NoSuchElementException:
+            return recursion()
+
+    # Искать с задержкой (Много раз)
+    if delay:
+        time = datetime.now()
+        result = recursion()
+        if result is None:
+            if text is not None:
+                print("ERROR", "NoSuchElement", "({}) | Delay = {}".format(text, 4))
+            return result
+        else:
+            return result
+    # Искать сразу (один раз)
+    else:
+        if name is not None:
+            try:
+                return b.find_element_by_name(name)
+            except NoSuchElementException:
+                return None
+        if xpath is not None:
+            try:
+                return b.find_element_by_xpath(xpath)
+            except NoSuchElementException:
+                return None
