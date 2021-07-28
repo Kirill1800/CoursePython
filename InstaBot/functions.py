@@ -114,21 +114,27 @@ def text_to_list(lst, count):
 
 #  проверка подписаны мы на человека или нет
 def check_users(b):
-    xpath_yes_subscribe = '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div[2]/button/div/span'
+    xpath_b = '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div[1]/button'
+    xpath_g = '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[2]/div/div[1]/button'
     try:
         result = "Мы подписаны"
-        b.find_element_by_xpath(xpath_yes_subscribe)
-        print("  " + result)
+        b.find_element_by_xpath(xpath_b)
+        print("1  " + result)
         return result
     except NoSuchElementException:
-        result = "Мы не подписаны"
-        print("  " + result)
-        return result
+        try:
+            result = "Мы подписаны"
+            b.find_element_by_xpath(xpath_g)
+            print("2  " + result)
+            return result
+        except NoSuchElementException:
+            result = "Мы не подписаны"
+            print("  " + result)
+            return result
 
 
 # Поиск элемента по "xpath" или "name" (в случае ошибки напечатает "text" если он указан)
 def find_element(b, text=None, xpath=None, name=None, delay=True):
-
     def recursion():
         sleep(0.1)
         try:
@@ -166,3 +172,28 @@ def find_element(b, text=None, xpath=None, name=None, delay=True):
                 return b.find_element_by_xpath(xpath)
             except NoSuchElementException:
                 return None
+
+
+# Прокрутка до того момента пока не наберется число "count" пользователей | прокручиваемый элемент "elm_scroll"
+def scroll(b, count, elm_scroll):
+
+    xpath_count_my_sub = '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a/span'
+    count_my_sub = b.find_element_by_xpath(xpath_count_my_sub).text
+    count_my_sub = count_my_sub.replace(" ", "")
+    count_my_sub = count_my_sub.replace("тыс.", "000")
+    count_my_sub = int(count_my_sub)
+    print("Число наших подписок:", count_my_sub)
+
+    # Ограничение на парсинг пользователей при прокрутке
+    if count > count_my_sub:
+        temp_count = count_my_sub
+    else:
+        temp_count = count
+
+    while True:
+        sleep(0.5)
+        b.execute_script("""arguments[0].scrollTo(0, arguments[0].scrollHeight);
+                                return arguments[0].scrollHeight; """, elm_scroll)
+        elms_users = b.find_elements_by_xpath('//a[@class="FPmhX notranslate  _0imsa "]')
+        if len(elms_users) >= temp_count:
+            return elm_scroll

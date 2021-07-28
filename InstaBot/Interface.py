@@ -1,12 +1,13 @@
+from selenium import webdriver
 from tkinter import *
 from tkinter.ttk import *
 from InstaBot.Module1_urls import module1
 from InstaBot.Module2_sort import module2
 from InstaBot.Module3_like import module3
 from InstaBot.Module4_del import module4
-# from InstaBot.Module5_celeba import module5
-from InstaBot.path import path_sort, path_users, path_subscriptions
-from InstaBot.functions import open_file_to_list, text_to_list
+from InstaBot.Module5_celeba import module5
+from InstaBot.path import path_sort, path_users, path_subscriptions, path_web_driver
+from InstaBot.functions import open_file_to_list, text_to_list, login_inst
 
 
 # Функция которая вызывается по нажатию кнопки
@@ -69,9 +70,14 @@ def button_6_module_4():
 def button_7_module_5():
     label.configure(text="Модуль 5 начал работать")
     window.update()
-    # module5()
+    module5()
     label.configure(text="Модуль 5 завершен!")
     window.update()
+
+
+def button_login():
+    browser = webdriver.Chrome(path_web_driver)
+    login_inst(browser=browser)
 
 
 window = Tk()  # Инициализация интерфейса
@@ -86,6 +92,7 @@ button4 = Button(window, text="Показать модуль 2", command=button_
 button5 = Button(window, text="Обновить модуль 3", command=button_5_module_3)
 button6 = Button(window, text="Отписаться", command=button_6_module_4)
 button7 = Button(window, text="Запустить модуль 5", command=button_7_module_5)
+button_login = Button(window, text="Вход в аккаунт", command=button_login)
 
 entry = Entry(window, width=10)
 combo = Combobox(window)
@@ -102,6 +109,7 @@ button4.grid(column=3, row=1)
 button5.grid(column=4, row=1)
 button6.grid(column=0, row=2)
 button7.grid(column=1, row=2)
+button_login.grid(column=2, row=2)
 text.grid(column=1, row=3, columnspan=5, sticky=W + E)
 
 # entry.grid(column=1, row=0)

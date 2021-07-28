@@ -15,6 +15,7 @@ def open_subscribers(b):
 def get_subscribes(b, count):
     result = []
     xpath = "/html/body/div[5]/div/div/div[2]"
+    # /html/body/div[5]/div/div/div[3]
     smart_sleep(browser=b, xpath=xpath)
     elm = b.find_element_by_xpath(xpath=xpath)
     sleep(3)

@@ -3,10 +3,11 @@ from InstaBot.path import path_top
 from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
 from time import sleep
-from InstaBot.path import path_sort, path_subscriptions, path_web_driver
-from InstaBot.functions import login_inst, find_element, exception, smart_sleep, open_file_to_list, check_users
+from InstaBot.path import path_web_driver, path_top_10
+from InstaBot.functions import login_inst, smart_sleep, scroll
 from datetime import datetime, timedelta
 from InstaBot.Module2_sort import check_private
+from InstaBot.Module3_like import subscribe
 from termcolor import cprint
 from datetime import datetime
 from random import shuffle
@@ -18,14 +19,11 @@ def xpath(key):
     result.update({"Строка поиска": '//*[@id="react-root"]/section/nav/div[2]/div/div/div[2]'})
     # Кнопки
     result.update({"Кнопки пользователя": '//*[@id="react-root"]/section/main/div/header/section'})
-    result.update({"Подписаться": '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[2]/div/div/button'})
-    # без '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div/button'
-    # галка //*[@id="react-root"]/section/main/div/header/section/div[1]/div[2]/div/div/button
-    result.update(
-        {"Отписатся": '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div[2]/button'})
-    # //*[@id="react-root"]/section/main/div/header/section/div[1]/div[2]/div/div[2]/button
+    result.update({"ПодписГ": '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[2]/div/div/button'})
+    result.update({"ПодписБ": '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div/button'})
+    result.update({"ОтписГ": '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[2]/div/div[2]/button'})
+    result.update({"ОтписБ": '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div[2]/button'})
     result.update({"Подтвердить отписку": '/html/body/div[5]/div/div/div/div[3]/button[1]'})
-    # /html/body/div[5]/div/div/div/div[3]/button[1]
     # Цифры
     result.update({"Подписчики": '//a[@class="-nal3 "]'})
     result.update({"Элемент скролинга": '//ul[@class="jSC57  _6xe7A"]'})
@@ -33,36 +31,6 @@ def xpath(key):
     result.update({"Подтвердить отписку4": '//button[@class="aOOlW -Cab_   "]'})
     result.update({"Подтвердить отписку5": '//button[@class="aOOlW -Cab_   "]'})
     return result[key]
-
-
-# ПОДПИСАТЬСЯ (True - подписался, False - не получилось)
-def subscribe(browser):
-    find_element(b=browser, xpath=xpath("Строка поиска"), text="Строка поиска")
-    try:
-        # sleep(9999)
-        find_element(b=browser, xpath=xpath("Подписаться"), text="Кнопка Подписаться").click()
-        # Проверка
-        if find_element(b=browser, xpath=xpath("Отписатся"), text="Кнопка Отписаться") is not None:
-            return True
-        else:
-            return False
-    except AttributeError:
-        return False
-
-
-# ОТПИСАТЬСЯ (True - отписался, False - не получилось)
-def unsubscribe(browser):
-    find_element(b=browser, xpath=xpath("Строка поиска"), text="Строка поиска")
-    try:
-        find_element(b=browser, xpath=xpath("Отписатся"), text="Кнопка Отписаться").click()
-        find_element(b=browser, xpath=xpath("Подтвердить отписку"), text="Кнопка подтвердить отписку").click()
-        # Проверка
-        if find_element(b=browser, xpath=xpath("Подписаться"), text="Кнопка Подписаться") is not None:
-            return True
-        else:
-            return False
-    except AttributeError:
-        return False
 
 
 def module5():
@@ -76,49 +44,57 @@ def module5():
     cprint(str(datetime.now()) + "Вход выполнен!", "green", attrs=['bold'])
     print()
     i = 0
-    count_subscribe = 0
-    count_unsubscribe = 0
-    while True:
-        i += 1
-        shuffle(mas)  # ПЕРЕМЕШКА
-        # mas = ["https://www.instagram.com/zendaya/"]
-        j = 0
-        for user in mas:
-            j += 1
-            browser.get(user)
-            find_element(b=browser, xpath=xpath("Кнопки пользователя"), text="Кнопки пользователя")
-            # sleep(9999)
 
-            # if find_element(b=browser, xpath='//*[@id="react-root"]/section/main/div/header/section/div[2]/div/div[2]/div/span/span[1]/button/div/span', text="Кнопка отписаться", not_delay=True) is not None:
-            #     print("Мы НЕ подписаны на этого человека")
-            #     # self.subscribe()
-            # else:
-            #     print("Мы подписаны на этого человека")
-            #     # self.unsubscribe()
-            # sleep(10000000)
+    # -- 1 -- Подписатся на всех
+    # while True:
+    #
+    #     i += 1
+    #     shuffle(mas)  # ПЕРЕМЕШКА
+    #
+    #     j = 0
+    #     for user in mas:
+    #         j += 1
+    #         print()
+    #         print("Человек: {}".format(user))
+    #         browser.get(user)
+    #         smart_sleep(browser=browser)
+    #
+    #         res_except = exception(browser=browser)  # Проверяем рабочая ли ссылка
+    #         res_privat = check_private(browser=browser)  # Проверяем аккаунт на приватность
+    #         if res_except and not res_privat:  # если ссылка рабочая то:
+    #             ch = check_users(b=browser)  # Проверяем подписаны или нет
+    #             if ch == "Мы подписаны":
+    #                 print("   Пропуск {} ибо подписаны!".format(user))
+    #             if ch == "Мы не подписаны":
+    #                 print("#$^")
+    #                 subscribe(b=browser, p=user)  # подписываемся
 
-            print()
-            # Если подписаны
-            if find_element(b=browser, xpath=xpath("Подписаться")):
-                cprint("[ИНФО] Мы подписаны на этого человека", "red")
-                if subscribe(browser):
-                    cprint("[ДЕЙСТВИЕ] Подписались", "red")
-                    cprint("[ИНФО] Подписались {} из {}".format(j, len(mas)), "red")
-            else:
-                cprint("[ИНФО] Мы НЕ подписаны на этого человека", "red")
-                if unsubscribe(browser):
-                    text = "[ДЕЙСТВИЕ] Отписался от {}".format(user.rsplit('/')[3])
-                    count = "{0:0>2}".format(i) + "." + "{0:0>3}".format(j)
-                    cprint(str(datetime.now()) + count + " " + text, "green", attrs=['bold'])
-                    count_unsubscribe += 1
-                sleep(1.5)
-                if subscribe(browser):
-                    # num = self.top_users(user, 500, flag="MY_NUM", my_name=account)
-                    num = 0
-                    text = "[ДЕЙСТВИЕ] Подписался на {} (Теперь я №{} сверху)".format(user.rsplit('/')[3], num)
-                    count = "{0:0>2}".format(i) + "." + "{0:0>3}".format(j)
-                    cprint(str(datetime.now()) + count + " " + text, "green", attrs=['bold'])
-                    count_subscribe += 1
+    # -- 2 -- Войти в свой и открыть наши подписки
+    # Заходим в подписки наши
+    xpath_my_sub = '//*[@id="react-root"]/section/main/div/header/section/ul/li[3]/a'
+    browser.get("https://www.instagram.com/probnik6432/")
+    smart_sleep(browser=browser, xpath=xpath_my_sub)
+    browser.find_element_by_xpath(xpath_my_sub).click()
+    # Крутим
+    xpath_scroll = "/html/body/div[5]/div/div/div[3]"
+    smart_sleep(browser=browser, xpath=xpath_scroll)
+    elm_scroll = browser.find_element_by_xpath(xpath=xpath_scroll)
+    t = scroll(b=browser, count=100, elm_scroll=elm_scroll)
+    print(t.text)
 
+    num = 0
+    while num < len(t):
+        num += 1
+        # Нажимаем кнопку отписаться
+        xpath_button_user = "/html/body/div[5]/div/div/div[3]/ul/div/li[{}]/div/div[2]/button".format(num)
+        t.find_element_by_xpath(xpath_button_user).click()
+        # Подтверждаем отписку
+        xpath_improve = "/html/body/div[6]/div/div/div/div[3]/button[1]"
+        smart_sleep(browser=browser, xpath=xpath_improve)
+        browser.find_element_by_xpath(xpath_improve).click()
 
-module5()
+    # /html/body/div[5]/div/div/div[3]/ul/div/li[1]/div/div[2]/button
+    # /html/body/div[5]/div/div/div[3]/ul/div/li[49]/div/div[2]/button
+    # /html/body/div[5]/div/div/div[3]/ul/div/li[54]/div/div[2]/button
+
+    # -- 3 -- цикл который отписывается от всех и в тоже время опять подписывается
