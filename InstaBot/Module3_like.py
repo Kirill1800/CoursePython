@@ -9,7 +9,7 @@ from InstaBot.Module2_sort import check_private
 
 # Подписались на человека
 def subscribe(b, p):
-    xpath = '//*[@id="react-root"]/section/main/div/header/section/div[1]/div[1]/div/div/button'
+    xpath = '//button[@class="sqdOP  L3NKy   y3zKF     "]'
     smart_sleep(browser=b, xpath=xpath)
     b.find_element_by_xpath(xpath).click()
     print("  Подписались")
